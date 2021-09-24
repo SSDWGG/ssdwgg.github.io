@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="font_2685925_i8qdxcv2i/iconfont.css">
+  <style type="text/css">
+    body{
+      background-color: greenyellow;
+    }
+    @font-face {
+    /*  如果要用下载的字体的话可以这样指定*/
+    /*  起一个名字*/
+      font-family: "myfont";
+      /*src: url('');  指定路径  */
+
+    }
+    .test-p{
+      color: darkred;
+      /*rem和em都可以*/
+      font-size: 10rem;
+      /*指定字体，可以指定多个*/
+      font-family: "HanziPen SC","Microsoft Sans Serif";
+    }
+    .test-p2{
+      /*字体的简写包括 斜体 加粗 大小/行高 字体种类 其中斜体和加粗可以不写，不写就是normal*/
+      font: italic bold 50px/2 "HanziPen SC","Microsoft YaHei";
+    }
+    /*
+      white-space   设置网页如何处理空白
+                normal
+               nowrap 不换行
+               pre 保留空白
+      */
+  </style>
+</head>
+<body>
+                                <!--文本或者图片的垂直对齐属性是vertical-align    文字就用行高来对齐-->
+  <p class="test-p">
+    ssdwgg
+  </p>
+  <p class="test-p2">
+      ssdwgg
+  </p>
+                                <!--引用文字图标，还可以放在伪类里引用  -->
+    <span class="iconfont">
+        &#xe98b;
+    </span>
+    <span class="iconfont icon-banquan"></span>
+</body>
+</html>
