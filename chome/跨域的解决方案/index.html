@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Anne-jia is Blog"><meta name="keywords" content="博客,anne-jia"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.5"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.5"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>跨域的解决方案 | 清风徐来！只为努力归来的少年</title><meta name="generator" content="Hexo 4.2.1"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">跨域的解决方案</h1><a id="logo" href="/.">清风徐来！只为努力归来的少年</a><p class="description">只为遇到更好的自己</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">跨域的解决方案</h1><div class="post-meta"><a href="/chome/%E8%B7%A8%E5%9F%9F%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#comments" class="comment-count"></a><p><span class="date">Jul 10, 2018</span><span><a href="/categories/chome/" class="category">chome</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h1 id="什么是跨域？为什么浏览器要使用同源策略？"><a href="#什么是跨域？为什么浏览器要使用同源策略？" class="headerlink" title="什么是跨域？为什么浏览器要使用同源策略？"></a>什么是跨域？为什么浏览器要使用同源策略？</h1><p>因为浏览器出于安全考虑，有同源策略。也就是说，如果协议、域名或者端口有一个不同就是跨域，Ajax 请求会失败</p>
+<p><strong>那么是出于什么安全考虑才会引入这种机制呢</strong> 其实主要是用来防止 CSRF 攻击的。简单点说，CSRF 攻击是利用用户的登录态发起恶意请求。</p>
+<p>也就是说，没有同源策略的情况下，A 网站可以被任意其他来源的 Ajax 访问到内容。如果你当前 A 网站还存在登录态，那么对方就可以通过 Ajax 获得你的任何信息。当然跨域并不能完全阻止 CSRF。</p>
+<p><strong>然后我们来考虑一个问题，请求跨域了，那么请求到底发出去没有？</strong> 请求必然是发出去了，但是浏览器拦截了响应。你可能会疑问明明通过表单的方式可以发起跨域请求，为什么 Ajax 就不会。因为归根结底，跨域是为了阻止用户读取到另一个域名下的内容，Ajax 可以获取响应，浏览器认为这不安全，所以拦截了响应。但是表单并不会获取新的内容，所以可以发起跨域请求。同时也说明了跨域并不能完全阻止 CSRF，因为请求毕竟是发出去了。</p>
+<p>接下来我们将来学习几种常见的方式来解决跨域的问题。</p>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p>JSONP 的原理很简单，就是利用<br> <code>&lt;script&gt;</code> 标签没有跨域限制的漏洞。通过 <code>&lt;script&gt;</code> 标签指向一个需要访问的地址并提供一个回调函数来接收数据当需要通讯时。</p>
+<pre><code class="bash">
+&lt;script src=<span class="string">"http://domain/api?param1=a&amp;param2=b&amp;callback=jsonp"</span>&gt;&lt;/script&gt;
+&lt;script&gt;
+    <span class="keyword">function</span> jsonp(data) {
+        console.log(data)
+    }
+&lt;/script&gt;    </code></pre>
+<p>JSONP 使用简单且兼容性不错，但是只限于 <code>get</code> 请求。</p>
+<p>在开发中可能会遇到多个 <code>JSONP</code> 请求的回调函数名是相同的，这时候就需要自己封装一个 <code>JSONP</code>，以下是简单实现</p>
+<pre><code class="bash"><span class="keyword">function</span> jsonp(url, jsonpCallback, success) {
+  <span class="built_in">let</span> script = document.createElement(<span class="string">'script'</span>)
+  script.src = url
+  script.async = <span class="literal">true</span>
+  script.type = <span class="string">'text/javascript'</span>
+  window[jsonpCallback] = <span class="keyword">function</span>(data) {
+    success &amp;&amp; success(data)
+  }
+  document.body.appendChild(script)
+}
+jsonp(<span class="string">'http://xxx'</span>, <span class="string">'callback'</span>, <span class="keyword">function</span>(value) {
+  console.log(value)
+})</code></pre>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>CORS 需要浏览器和后端同时支持。IE 8 和 9 需要通过 <code>XDomainRequest</code> 来实现。</p>
+<p>浏览器会自动进行 CORS 通信，实现 CORS 通信的关键是后端。只要后端实现了 CORS，就实现了跨域。</p>
+<p>服务端设置 <code>Access-Control-Allow-Origin</code> 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源。</p>
+<p>虽然设置 CORS 和前端没什么关系，但是通过这种方式解决跨域问题的话，会在发送请求时出现两种情况，分别为简单请求和复杂请求。</p>
+<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>以 Ajax 为例，当满足以下条件时，会触发简单请求</p>
+<p>1、使用下列方法之一：<br><font color="red"></font></p><font color="red">
+<ul>
+<li><p>GET</p>
+</li>
+<li><p>HEAD</p>
+</li>
+<li><p>POST</p>
+</li>
+</ul>
+</font>
+
+<p>2、Content-Type 的值仅限于下列三者之一：<br><font color="red"></font></p><font color="red">
+<ul>
+<li><p>text/plain</p>
+</li>
+<li><p>multipart/form-data</p>
+</li>
+<li><p>application/x-www-form-urlencoded</p>
+</li>
+</ul>
+</font>
+
+<p>请求中的任意 <code>XMLHttpRequestUpload</code> 对象均没有注册任何事件监听器；<code>XMLHttpRequestUpload</code> 对象可以使用 <code>XMLHttpRequest.upload</code> 属性访问。</p>
+<p>复杂请求<br>那么很显然，不符合以上条件的请求就肯定是复杂请求了。</p>
+<p>对于复杂请求来说，首先会发起一个预检请求，该请求是 option 方法的，通过该请求来知道服务端是否允许跨域请求。</p>
+<p>对于预检请求来说，如果你使用过 Node 来设置 CORS 的话，可能会遇到过这么一个坑。</p>
+<p>以下以 express 框架举例：</p>
+<pre><code class="bash">app.use((req, res, next) =&gt; {
+  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)
+  res.header(<span class="string">'Access-Control-Allow-Methods'</span>, <span class="string">'PUT, GET, POST, DELETE, OPTIONS'</span>)
+  res.header(
+    <span class="string">'Access-Control-Allow-Headers'</span>,
+    <span class="string">'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials'</span>
+  )
+  next()
+})</code></pre>
+<p>该请求会验证你的 <code>Authorization</code> 字段，没有的话就会报错。</p>
+<p>当前端发起了复杂请求后，你会发现就算你代码是正确的，返回结果也永远是报错的。因为预检请求也会进入回调中，也会触发 <code>next</code> 方法，因为预检请求并不包含 <code>Authorization</code> 字段，所以服务端会报错。</p>
+<p>想解决这个问题很简单，只需要在回调中过滤<code>option</code> 方法即可</p>
+<pre><code class="bash">res.statusCode = 204
+res.setHeader(<span class="string">'Content-Length'</span>, <span class="string">'0'</span>)
+res.end()</code></pre>
+<h3 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h3><p>该方式只能用于二级域名相同的情况下，比如 <code>a.test.com</code> 和<code>b.test.com</code> 适用于该方式。</p>
+<p>只需要给页面添加 <code>document.domain = 'test.com'</code>表示二级域名都相同就可以实现跨域</p>
+<h3 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h3><p>这种方式通常用于获取嵌入页面中的第三方页面数据。一个页面发送消息，另一个页面判断来源并接收消息</p>
+<pre><code class="bash">
+// 发送消息端
+window.parent.postMessage(<span class="string">'message'</span>, <span class="string">'http://test.com'</span>)
+// 接收消息端
+var mc = new MessageChannel()
+mc.addEventListener(<span class="string">'message'</span>, event =&gt; {
+  var origin = event.origin || event.originalEvent.origin
+  <span class="keyword">if</span> (origin === <span class="string">'http://test.com'</span>) {
+    console.log(<span class="string">'验证通过'</span>)
+  }
+})</code></pre>
+<pre><code class="bash"></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div><div class="post-copyright"><blockquote><p>原文作者: Anne-jia</p><p>原文链接: <a href="http://yoursite.com/chome/跨域的解决方案/">http://yoursite.com/chome/跨域的解决方案/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/js/bj/fetchAxiosAjax%E7%9A%84%E5%8C%BA%E5%88%AB/" class="pre">ajax/fetch/axios的区别</a><a href="/css/%E7%BB%8F%E5%85%B8%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="next">经典布局的实现</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是跨域？为什么浏览器要使用同源策略？"><span class="toc-text">什么是跨域？为什么浏览器要使用同源策略？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP"><span class="toc-text">JSONP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单请求"><span class="toc-text">简单请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-domain"><span class="toc-text">document.domain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#postMessage"><span class="toc-text">postMessage</span></a></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/dav/">dav</a></li><li class="post-list-item"><a class="post-list-link" href="/js/bj/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%AF%E5%87%BD%E6%95%B0/">什么是纯函数</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E7%B2%92%E5%AD%90%E6%8F%92%E4%BB%B6/">粒子插件</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/ts%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/">ts基本类型</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8json-server/">服务器端如何启动json-server</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C/">项目依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/typescript/">typescript</a></li><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/%E5%AF%8C%E6%96%87%E6%9C%AC/">富文本</a></li><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/%E6%80%9D%E8%B7%AF/">思路</a></li><li class="post-list-item"><a class="post-list-link" href="/webapck/webpacks/webpack%E7%9A%84%E4%BD%BF%E7%94%A8/">Webpack的配置</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Protfolio/">Protfolio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chome/">chome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mock/">mock</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/protfolio/">protfolio</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webapck/">webapck</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%B8%83%E5%B1%80/" style="font-size: 15px;">布局</a> <a href="/tags/protflio/" style="font-size: 15px;">protflio</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">18</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://javasourceshare.cn/" title="java个人博客" target="_blank">java个人博客</a><ul></ul><a href="http://www.baidu.com/" title="百度" target="_blank">百度</a><ul></ul><a href="https://juejin.im/timeline" title="掘金" target="_blank">掘金</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Anne-jia.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://anne-jia.github.io"> Cocoa.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.5"></script><div id="fullscreen-img" class="hide"><span class="close"></span></div><script type="text/javascript" src="/js/imgview.js?v=2.0.5" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.5" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Anne-jia is Blog"><meta name="keywords" content="博客,anne-jia"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.5"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.5"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>css选择器 | 清风徐来！只为努力归来的少年</title><meta name="generator" content="Hexo 4.2.1"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">css选择器</h1><a id="logo" href="/.">清风徐来！只为努力归来的少年</a><p class="description">只为遇到更好的自己</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">css选择器</h1><div class="post-meta"><a href="/css/css%E9%80%89%E6%8B%A9%E5%99%A8/#comments" class="comment-count"></a><p><span class="date">Jul 07, 2018</span><span><a href="/categories/css/" class="category">css</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h1 id="css选择器-amp-css3选择器"><a href="#css选择器-amp-css3选择器" class="headerlink" title="css选择器&amp;css3选择器"></a>css选择器&amp;css3选择器</h1><p><code>CSS选择器</code></p>
+<ul>
+<li><p>元素选择器    元素名称{属性：属性值；}</p>
+</li>
+<li><p>id（#id）ID选择器                      </p>
+</li>
+<li><p>class(.class)  类选择器   </p>
+</li>
+<li><p>群组选择器（将具有相同性质的选择器写在一组）</p>
+</li>
+<li><p>伪选择器  </p>
+</li>
+<li><p>后代选择器： 选择符 选择符  父选择器 子选择器{属性：属性值；}</p>
+</li>
+<li><p>通配符选择器  *{属性：属性值}</p>
+</li>
+<li><p>伪元素选择器 ：：link{} ,:hover{}, :active{} ,:visited{}</p>
+</li>
+<li><p>子选择器： 父选择器&gt;子选择器{属性：属性值}</p>
+</li>
+</ul>
+<p><code>CSS3选择器</code></p>
+<p>一、属性选择器（通过元素有的属性名来判断）</p>
+<p>二、伪类选择器</p>
+<ol>
+<li><p>动态伪类选择器</p>
+</li>
+<li><p>uI状态伪类</p>
+</li>
+<li><p>三、伪元素选择器</p>
+</li>
+<li><p>:after{}</p>
+</li>
+<li><p>：before{}</p>
+</li>
+<li><p>四、层级选择器</p>
+</li>
+</ol>
+<p>$(‘#id’).siblings() 当前元素所有的兄弟节点</p>
+<p>$(‘#id’).prev() 当前元素前一个兄弟节点</p>
+<p>$(‘#id’).prevaAll() 当前元素之前所有的兄弟节点</p>
+<p>$(‘#id’).next() 当前元素之后第一个兄弟节点</p>
+<p>$(‘#id’).nextAll() 当前元素之后所有的兄弟节点</p>
+<p>这三个方法都可以添加选择器，给出选择条件，就能找到你指定的兄弟节点了。</p>
+<p><img src="/img/cssimg/CSS%E9%80%89%E6%8B%A9%E5%99%A8.jpg" alt="avatar"></p>
+<p><code>选择器权重</code></p>
+<p><img src="/img/cssimg/917css%E6%9D%83%E9%87%8D%E8%A1%A8%E7%A4%BA.png" alt="avatar"></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div><div class="post-copyright"><blockquote><p>原文作者: Anne-jia</p><p>原文链接: <a href="http://yoursite.com/css/css选择器/">http://yoursite.com/css/css选择器/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/css/css_s/%E7%9B%92%E6%A8%A1%E5%9E%8B/" class="pre">盒模型</a><a href="/js/js%E5%9F%BA%E7%A1%80/" class="next">js基础</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#css选择器-amp-css3选择器"><span class="toc-text">css选择器&amp;css3选择器</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/dav/">dav</a></li><li class="post-list-item"><a class="post-list-link" href="/js/bj/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%AF%E5%87%BD%E6%95%B0/">什么是纯函数</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E7%B2%92%E5%AD%90%E6%8F%92%E4%BB%B6/">粒子插件</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/ts%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/">ts基本类型</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8json-server/">服务器端如何启动json-server</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C/">项目依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/typescript/">typescript</a></li><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/%E5%AF%8C%E6%96%87%E6%9C%AC/">富文本</a></li><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/%E6%80%9D%E8%B7%AF/">思路</a></li><li class="post-list-item"><a class="post-list-link" href="/webapck/webpacks/webpack%E7%9A%84%E4%BD%BF%E7%94%A8/">Webpack的配置</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Protfolio/">Protfolio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chome/">chome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mock/">mock</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/protfolio/">protfolio</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webapck/">webapck</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%B8%83%E5%B1%80/" style="font-size: 15px;">布局</a> <a href="/tags/protflio/" style="font-size: 15px;">protflio</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">18</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://javasourceshare.cn/" title="java个人博客" target="_blank">java个人博客</a><ul></ul><a href="http://www.baidu.com/" title="百度" target="_blank">百度</a><ul></ul><a href="https://juejin.im/timeline" title="掘金" target="_blank">掘金</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Anne-jia.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://anne-jia.github.io"> Cocoa.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.5"></script><div id="fullscreen-img" class="hide"><span class="close"></span></div><script type="text/javascript" src="/js/imgview.js?v=2.0.5" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.5" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

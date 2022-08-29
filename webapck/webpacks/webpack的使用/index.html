@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Anne-jia is Blog"><meta name="keywords" content="博客,anne-jia"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.5"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.5"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>Webpack的配置 | 清风徐来！只为努力归来的少年</title><meta name="generator" content="Hexo 4.2.1"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Webpack的配置</h1><a id="logo" href="/.">清风徐来！只为努力归来的少年</a><p class="description">只为遇到更好的自己</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Webpack的配置</h1><div class="post-meta"><a href="/webapck/webpacks/webpack%E7%9A%84%E4%BD%BF%E7%94%A8/#comments" class="comment-count"></a><p><span class="date">Dec 08, 2018</span><span><a href="/categories/webapck/" class="category">webapck</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="webpack配置的4大核心配置：入口-出口-loader-插件"><a href="#webpack配置的4大核心配置：入口-出口-loader-插件" class="headerlink" title="webpack配置的4大核心配置：入口  出口  loader  插件"></a>webpack配置的4大核心配置：入口  出口  loader  插件</h2><p>入口文件的更改：diy入口文件不仅仅是<code>index.js</code>文件<br>1、配置<code>webpack.config.js</code>文件<br>    写入的位置在文件的根目录下<br>2、必须有导出：</p>
+<pre><code class="bash">module.exports={
+
+}</code></pre>
+<p>3、入口和出口关键字是固定的</p>
+<pre><code class="bash">module.exports={
+    // 入口
+    entry:{
+
+    },
+    // 出口
+    output:{
+
+    }
+}</code></pre>
+<p>4、设置入口和出口</p>
+<pre><code class="bash">module.exports={
+    // 入口
+    entry:{
+        // 绝对路径加相对路径 key值是不固定的
+        <span class="string">'kk'</span>:__dirname +<span class="string">'/src/main.js'</span>
+    },
+    // 出口
+    output:{
+        // 打包后的文件存放的地方
+        path : __dirname +<span class="string">'/dist'</span>,
+        // 打包后输出文件的文件名
+        filename:<span class="string">'aaa.js'</span>
+    }
+}</code></pre>
+<p>5、多个入口：多个入口的原因可能是多页面应用或者是引入不同的js代码<br><code>dist</code>文件夹下的js文件会根据<code>name</code>的名字来显示，既生成：<code>kk.js kk2.js</code></p>
+<pre><code class="bash">module.exports={
+    // 入口
+    entry:{
+        // 绝对路径加相对路径 key值是不固定的
+        <span class="string">'kk'</span>:__dirname +<span class="string">'/src/main.js'</span>,
+        <span class="string">'kk2'</span>:__dirname +<span class="string">'/src/main2.js'</span>
+    },
+    // 出口
+    output:{
+        // 打包后的文件存放的地方
+        path : __dirname +<span class="string">'/dist'</span>,
+        // 打包后输出文件的文件名
+        filename:<span class="string">'[name].js'</span>
+    }
+}
+</code></pre>
+<h2 id="Webpack-性能优化"><a href="#Webpack-性能优化" class="headerlink" title="Webpack 性能优化"></a>Webpack 性能优化</h2><p>思考中： <code>有哪些方式可以减少 Webpack 的打包时间</code><br><code>有哪些方式可以让 Webpack 打出来的包更小</code></p>
+<h3 id="减少-Webpack-打包时间"><a href="#减少-Webpack-打包时间" class="headerlink" title="减少 Webpack 打包时间"></a>减少 Webpack 打包时间</h3><h4 id="优化-Loader"><a href="#优化-Loader" class="headerlink" title="优化 Loader"></a>优化 Loader</h4><p>对于 Loader 来说，影响打包效率首当其冲必属 Babel 了。因为 Babel 会将代码转为字符串生成 AST，然后对 AST 继续进行转变最后再生成新的代码，项目越大，转换代码越多，效率就越低。当然了，我们是有办法优化的。</p>
+<p>首先我们可以优化 Loader 的文件搜索范围</p>
+<pre><code class="bash">module.exports = {
+  module: {
+    rules: [
+      {
+        // js 文件才使用 babel
+        <span class="built_in">test</span>: /\.js$/,
+        loader: <span class="string">'babel-loader'</span>,
+        // 只在 src 文件夹下查找
+        include: [resolve(<span class="string">'src'</span>)],
+        // 不会去查找的路径
+        exclude: /node_modules/
+      }
+    ]
+  }
+}
+</code></pre>
+<p>对于 Babel 来说，我们肯定是希望只作用在 JS 代码上的，然后 node_modules 中使用的代码都是编译过的，所以我们也完全没有必要再去处理一遍。</p>
+<p>当然这样做还不够，我们还可以将 Babel 编译过的文件缓存起来，下次只需要编译更改过的代码文件即可，这样可以大幅度加快打包时间</p>
+<pre><code class="bash">loader: <span class="string">'babel-loader?cacheDirectory=true'</span></code></pre>
+<h4 id="HappyPack"><a href="#HappyPack" class="headerlink" title="HappyPack"></a>HappyPack</h4><p>受限于 Node 是单线程运行的，所以 Webpack 在打包的过程中也是单线程的，特别是在执行 Loader 的时候，长时间编译的任务很多，这样就会导致等待的情况。</p>
+<p>HappyPack 可以将 Loader 的同步执行转换为并行的，这样就能充分利用系统资源来加快打包效率了</p>
+<pre><code class="bash">module: {
+  loaders: [
+    {
+      <span class="built_in">test</span>: /\.js$/,
+      include: [resolve(<span class="string">'src'</span>)],
+      exclude: /node_modules/,
+      // id 后面的内容对应下面
+      loader: <span class="string">'happypack/loader?id=happybabel'</span>
+    }
+  ]
+},
+plugins: [
+  new HappyPack({
+    id: <span class="string">'happybabel'</span>,
+    loaders: [<span class="string">'babel-loader?cacheDirectory'</span>],
+    // 开启 4 个线程
+    threads: 4
+  })
+]</code></pre>
+<h4 id="DllPlugin"><a href="#DllPlugin" class="headerlink" title="DllPlugin"></a>DllPlugin</h4><p>DllPlugin 可以将特定的类库提前打包然后引入。这种方式可以极大的减少打包类库的次数，只有当类库更新版本才有需要重新打包，并且也实现了将公共代码抽离成单独文件的优化方案。</p>
+<p>接下来我们就来学习如何使用 DllPlugin</p>
+<pre><code class="bash">// 单独配置在一个文件中
+// webpack.dll.conf.js
+const path = require(<span class="string">'path'</span>)
+const webpack = require(<span class="string">'webpack'</span>)
+module.exports = {
+  entry: {
+    // 想统一打包的类库
+    vendor: [<span class="string">'react'</span>]
+  },
+  output: {
+    path: path.join(__dirname, <span class="string">'dist'</span>),
+    filename: <span class="string">'[name].dll.js'</span>,
+    library: <span class="string">'[name]-[hash]'</span>
+  },
+  plugins: [
+    new webpack.DllPlugin({
+      // name 必须和 output.library 一致
+      name: <span class="string">'[name]-[hash]'</span>,
+      // 该属性需要与 DllReferencePlugin 中一致
+      context: __dirname,
+      path: path.join(__dirname, <span class="string">'dist'</span>, <span class="string">'[name]-manifest.json'</span>)
+    })
+  ]
+}</code></pre>
+<p>然后我们需要执行这个配置文件生成依赖文件，接下来我们需要使用 DllReferencePlugin 将依赖文件引入项目中</p>
+<pre><code class="bash">// webpack.conf.js
+module.exports = {
+  // ...省略其他配置
+  plugins: [
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      // manifest 就是之前打包出来的 json 文件
+      manifest: require(<span class="string">'./dist/vendor-manifest.json'</span>),
+    })
+  ]
+}</code></pre>
+<h4 id="代码压缩"><a href="#代码压缩" class="headerlink" title="代码压缩"></a>代码压缩</h4><p>在 Webpack3 中，我们一般使用 UglifyJS 来压缩代码，但是这个是单线程运行的，为了加快效率，我们可以使用 <code>webpack-parallel-uglify-plugin</code> 来并行运行 <code>UglifyJS</code>，从而提高效率。</p>
+<p>在 Webpack4 中，我们就不需要以上这些操作了，只需要将 mode 设置为 production 就可以默认开启以上功能。代码压缩也是我们必做的性能优化方案，当然我们不止可以压缩 JS 代码，还可以压缩 HTML、CSS 代码，并且在压缩 JS 代码的过程中，我们还可以通过配置实现比如删除 console.log 这类代码的功能。</p>
+<p>一些小的优化点<br>我们还可以通过一些小的优化点来加快打包速度</p>
+<p><code>resolve.extensions</code>：用来表明文件后缀列表，默认查找顺序是 <code>['.js', '.json']</code>，如果你的导入文件没有添加后缀就会按照这个顺序查找文件。我们应该尽可能减少后缀列表长度，然后将出现频率高的后缀排在前面<br><code>resolve.alias</code>：可以通过别名的方式来映射一个路径，能让 Webpack 更快找到路径<br><code>module.noParse</code>：如果你确定一个文件下没有其他依赖，就可以使用该属性让 Webpack 不扫描该文件，这种方式对于大型的类库很有帮助</p>
+<h3 id="减少-Webpack-打包后的文件体积"><a href="#减少-Webpack-打包后的文件体积" class="headerlink" title="减少 Webpack 打包后的文件体积"></a>减少 Webpack 打包后的文件体积</h3><h4 id="按需加载"><a href="#按需加载" class="headerlink" title="按需加载"></a>按需加载</h4><p>想必大家在开发 SPA 项目的时候，项目中都会存在十几甚至更多的路由页面。如果我们将这些页面全部打包进一个 JS 文件的话，虽然将多个请求合并了，但是同样也加载了很多并不需要的代码，耗费了更长的时间。那么为了首页能更快地呈现给用户，我们肯定是希望首页能加载的文件体积越小越好，这时候我们就可以使用按需加载，将每个路由页面单独打包为一个文件。当然不仅仅路由可以按需加载，对于 <code>loadash</code> 这种大型类库同样可以使用这个功能。</p>
+<p>按需加载的代码实现这里就不详细展开了，因为鉴于用的框架不同，实现起来都是不一样的。当然了，虽然他们的用法可能不同，但是底层的机制都是一样的。都是当使用的时候再去下载对应文件，返回一个 <code>Promise</code>，当 <code>Promise</code> 成功以后去执行回调。</p>
+<h4 id="Scope-Hoisting"><a href="#Scope-Hoisting" class="headerlink" title="Scope Hoisting"></a>Scope Hoisting</h4><p>Scope Hoisting 会分析出模块之间的依赖关系，尽可能的把打包出来的模块合并到一个函数中去。</p>
+<p>比如我们希望打包两个文件</p>
+<pre><code class="bash">// test.js
+<span class="built_in">export</span> const a = 1
+// index.js
+import { a } from <span class="string">'./test.js'</span></code></pre>
+<p>对于这种情况，我们打包出来的代码会类似这样</p>
+<pre><code class="bash">[
+  /* 0 */
+  <span class="keyword">function</span> (module, exports, require) {
+    //...
+  },
+  /* 1 */
+  <span class="keyword">function</span> (module, exports, require) {
+    //...
+  }
+]</code></pre>
+<p>但是如果我们使用 Scope Hoisting 的话，代码就会尽可能的合并到一个函数中去，也就变成了这样的类似代码</p>
+<pre><code class="bash">[
+  /* 0 */
+  <span class="keyword">function</span> (module, exports, require) {
+    //...
+  }
+]</code></pre>
+<p>这样的打包方式生成的代码明显比之前的少多了。如果在 Webpack4 中你希望开启这个功能，只需要启用 optimization.concatenateModules 就可以了。</p>
+<pre><code class="bash">module.exports = {
+  optimization: {
+    concatenateModules: <span class="literal">true</span>
+  }
+}</code></pre>
+<h4 id="Tree-Shaking"><a href="#Tree-Shaking" class="headerlink" title="Tree Shaking"></a>Tree Shaking</h4><p>Tree Shaking 可以实现删除项目中未被引用的代码，比如</p>
+<pre><code class="bash">// test.js
+<span class="built_in">export</span> const a = 1
+<span class="built_in">export</span> const b = 2
+// index.js
+import { a } from <span class="string">'./test.js'</span></code></pre>
+<p>对于以上情况，test 文件中的变量 b 如果没有在项目中使用到的话，就不会被打包到文件中。<br>如果你使用 Webpack 4 的话，开启生产环境就会自动启动这个优化功能。</p>
+<pre><code class="bash"></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div><div class="post-copyright"><blockquote><p>原文作者: Anne-jia</p><p>原文链接: <a href="http://yoursite.com/webapck/webpacks/webpack的使用/">http://yoursite.com/webapck/webpacks/webpack的使用/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/Protfolio/Portfolio/%E6%80%9D%E8%B7%AF/" class="pre">思路</a><a href="/mock/mock/%E6%A8%A1%E6%8B%9F%E6%95%B0%E6%8D%AE%20mock%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="next">模拟数据 mock服务器</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack配置的4大核心配置：入口-出口-loader-插件"><span class="toc-text">webpack配置的4大核心配置：入口  出口  loader  插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack-性能优化"><span class="toc-text">Webpack 性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#减少-Webpack-打包时间"><span class="toc-text">减少 Webpack 打包时间</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优化-Loader"><span class="toc-text">优化 Loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HappyPack"><span class="toc-text">HappyPack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DllPlugin"><span class="toc-text">DllPlugin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码压缩"><span class="toc-text">代码压缩</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少-Webpack-打包后的文件体积"><span class="toc-text">减少 Webpack 打包后的文件体积</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#按需加载"><span class="toc-text">按需加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Scope-Hoisting"><span class="toc-text">Scope Hoisting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tree-Shaking"><span class="toc-text">Tree Shaking</span></a></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/dav/">dav</a></li><li class="post-list-item"><a class="post-list-link" href="/js/bj/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%AF%E5%87%BD%E6%95%B0/">什么是纯函数</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E7%B2%92%E5%AD%90%E6%8F%92%E4%BB%B6/">粒子插件</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/ts%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/">ts基本类型</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8json-server/">服务器端如何启动json-server</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C/">项目依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/protfolio/Portfolio/typescript/">typescript</a></li><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/%E5%AF%8C%E6%96%87%E6%9C%AC/">富文本</a></li><li class="post-list-item"><a class="post-list-link" href="/Protfolio/Portfolio/%E6%80%9D%E8%B7%AF/">思路</a></li><li class="post-list-item"><a class="post-list-link" href="/webapck/webpacks/webpack%E7%9A%84%E4%BD%BF%E7%94%A8/">Webpack的配置</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Protfolio/">Protfolio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/chome/">chome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mock/">mock</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/protfolio/">protfolio</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webapck/">webapck</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%B8%83%E5%B1%80/" style="font-size: 15px;">布局</a> <a href="/tags/protflio/" style="font-size: 15px;">protflio</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">18</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://javasourceshare.cn/" title="java个人博客" target="_blank">java个人博客</a><ul></ul><a href="http://www.baidu.com/" title="百度" target="_blank">百度</a><ul></ul><a href="https://juejin.im/timeline" title="掘金" target="_blank">掘金</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Anne-jia.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://anne-jia.github.io"> Cocoa.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.5"></script><div id="fullscreen-img" class="hide"><span class="close"></span></div><script type="text/javascript" src="/js/imgview.js?v=2.0.5" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.5" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>
