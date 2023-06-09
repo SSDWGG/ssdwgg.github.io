@@ -2,43 +2,75 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,viewport-fit=cover"
-    />
-    <title>Vite App</title>
-    <script type="module" crossorigin src="/assets/index.7cfef012.js"></script>
-    <link rel="stylesheet" href="/assets/index.eb9c8085.css">
+    <title>poem</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
   <body>
-    <div id="app"></div>
-    
-    <script>
-      document.addEventListener('touchstart', function (event) {
-        if (event.touches.length > 1) {
-          event.preventDefault();
-        }
-      });
-
-      var lastTouchEnd = 0;
-
-      document.addEventListener(
-        'touchend',
-        function (event) {
-          var now = new Date().getTime();
-          if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-          }
-
-          lastTouchEnd = now;
-        },
-        false
-      );
-
-      document.addEventListener('gesturestart', function (event) {
-        event.preventDefault();
-      });
-    </script>
+    <div class="container">
+      <div class="box">
+        <span></span>
+        <div class="content">
+          <h2>题龙阳县青草湖</h2>
+          <p>西风吹老洞庭波，</p>
+          <p>一夜湘君白发多。</p>
+          <p>醉后不知天在水,</p>
+          <p>满船清梦压星河</p>
+          <a href="#">元·唐温如</a>
+        </div>
+      </div>
+      <div class="box">
+        <span></span>
+        <div class="content">
+          <h2>杂诗七首其一</h2>
+          <p>此身天地一蘧庐，</p>
+          <p>世事消磨绿鬓疏。</p>
+          <p>毕竟几人真得鹿，</p>
+          <p>不知终日梦为鱼。</p>
+          <a href="#">宋·黄庭坚</a>
+        </div>
+      </div>
+      <div class="box">
+        <span></span>
+        <div class="content">
+          <h2>六世达赖</h2>
+          <p>...</p>
+          <p>世间安得两全法，</p>
+          <p>不负如来不负卿。</p>
+          <a href="#">清·仓央嘉措</a>
+        </div>
+      </div>
+      <div class="box">
+        <span></span>
+        <div class="content">
+          <h2>唐多令</h2>
+          <p>...</p>
+          <p>欲买桂花同载酒，</p>
+          <p>终不似，少年游。</p>
+          <a href="#">宋·刘过</a>
+        </div>
+      </div>
+      <div class="box">
+        <span></span>
+        <div class="content">
+          <h2>大林寺桃花</h2>
+          <p>人间四月芳菲尽，</p>
+          <p>山寺桃花始盛开。</p>
+          <p>长恨春归无觅处，</p>
+          <p>不觉转入此中来。</p>
+          <a href="#">唐·白居易</a>
+        </div>
+      </div>
+      <div class="box">
+        <span></span>
+        <div class="content">
+          <h2>题都城南庄</h2>
+          <p>去年今日此门中，</p>
+          <p>人面桃花相映红。</p>
+          <p>人面不知何处去，</p>
+          <p>桃花依旧笑春风。</p>
+          <a href="#">唐·崔护</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
