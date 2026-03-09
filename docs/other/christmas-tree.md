@@ -2,5 +2,4 @@
 layout: page
 ---
 
-<!-- <ChristmasRole /> -->
 <ChristmasTree />
