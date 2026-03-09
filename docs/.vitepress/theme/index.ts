@@ -9,15 +9,12 @@ import 'nprogress-v2/dist/index.css'
 import 'virtual:group-icons.css' // 代码组样式
 import './style/index.css' // 自定义样式
 import "vitepress-markdown-timeline/dist/theme/index.css";
-
 import { h } from 'vue' // h函数
 import { useData, useRoute } from 'vitepress'
 // mediumZoom
 import mediumZoom from 'medium-zoom'
 import { nextTick, onMounted, watch } from 'vue'
-
 // 组件
-
 import { inBrowser } from 'vitepress'
 import busuanzi from 'busuanzi.pure.js'
 import MNavLinks from './components/MNavLinks.vue' // 导航
@@ -29,8 +26,6 @@ import ArticleMetadata from './components/ArticleMetadata.vue' // 字数阅读�
 import Linkcard from './components/Linkcard.vue' // 链接卡片
 import MyLayout from './components/MyLayout.vue' // 视图过渡
 import fluidborder from './components/fluidborder.vue' // 流体边框仅用于演示
-import backtotop from './components/backtotop.vue' // 返回顶部
-import notice from './components/notice.vue' // 公告
 import MouseClick from './components/MouseClick.vue'
 import MouseFollower from './components/MouseFollower.vue'
 import SvgaPlayer from './components/svgaPlayer.vue'
@@ -41,9 +36,7 @@ import ChristmasTree from './components/ChristmasTree.vue' // 圣诞树
 import ChristmasRole from './components/ChristmasRole.vue' // 圣诞树角色
 import splineRole from './components/splineRole/index.vue' // spline 模型
 import NewYear from './components/newYear/index.vue' // 新的一年
-
-// 不蒜子
-import bsz from './components/bsz.vue'
+import notice from "./components/notice.vue"
 
 // 彩虹背景动画样式
 let homePageStyle: HTMLStyleElement | undefined
@@ -72,6 +65,7 @@ export default {
     app.component('ChristmasRole', ChristmasRole)
     app.component('splineRole', splineRole)
     app.component('NewYear', NewYear)
+    app.component('notice', notice)
 
 
 

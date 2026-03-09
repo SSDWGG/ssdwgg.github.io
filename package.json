@@ -47,6 +47,7 @@
     "three-globe": "^2.45.0",
     "@vueuse/core": "^10.11.1",
     "gsap": "^3.13.0",
+    "@v-c/utils": "^0.0.26",
     "@splinetool/runtime": "^1.12.39"
   }
 }

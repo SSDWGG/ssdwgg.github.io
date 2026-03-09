@@ -14,10 +14,10 @@ hero:
   actions:
     - theme: brand
       text: 开始
-      link: /plan/todo
+      link: /wgg/personal
     - theme: alt
       text: GitHub
-      link: https://github.com/SSDWGG/vitePressBlog
+      link: https://github.com/SSDWGG/ssdwgg.github.io
       
 features:
   - icon: 📝

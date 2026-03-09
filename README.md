@@ -1,7 +1,8 @@
 ## WPD
 
 ## 访问方式
-- 访问地址：https://github.com/SSDWGG/ssdwgg.github.io
+
+- 访问地址：https://ssdwgg.github.io/
   
 - VitePress教程示范地址  https://vitepress.yiov.top/
   

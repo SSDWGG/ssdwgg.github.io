@@ -7,10 +7,9 @@ import { nextTick, provide } from 'vue'
 import MouseClick from "./MouseClick.vue";
 import MouseFollower from "./MouseFollower.vue";
 import backtotop from "./backtotop.vue"
-import notice from "./notice.vue"
+// import notice from "./notice.vue"
 import bsz from "./bsz.vue"
 import MClick from "./MClick.vue";
-import MCard from "./MCard.vue";
 
 const { isDark } = useData()
 
@@ -55,7 +54,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
       <backtotop />
     </template>
     <template #layout-top>
-      <notice />
+      <!-- <notice /> -->
       <MouseFollower />
       <MouseClick />
       <MClick />

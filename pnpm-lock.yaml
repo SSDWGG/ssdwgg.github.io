@@ -23,6 +23,9 @@ dependencies:
   '@types/node':
     specifier: ^18.7.18
     version: 18.7.18
+  '@v-c/utils':
+    specifier: ^0.0.26
+    version: 0.0.26(typescript@4.6.4)
   '@vitejs/plugin-vue':
     specifier: ^3.1.0
     version: 3.1.0(vite@3.1.0)(vue@3.5.22)
@@ -1993,6 +1996,17 @@ packages:
       '@unocss/transformer-directives': 0.45.21
       magic-string: 0.26.7
       vite: 3.1.0(less@4.4.2)(sass@1.93.2)
+    dev: false
+
+  /@v-c/utils@0.0.26(typescript@4.6.4):
+    resolution: {integrity: sha512-ClcZxr/DMNHe578gExOOzR54gQgniKA0Ltbm7W5lfw5VwSwx5wdsD4qp5530PmAVacDqyPMWWL1zBKx+ZeuATQ==}
+    dependencies:
+      lodash.clonedeep: 4.5.0
+      lodash.isequal: 4.5.0
+      lodash.merge: 4.6.2
+      vue: 3.5.22(typescript@4.6.4)
+    transitivePeerDependencies:
+      - typescript
     dev: false
 
   /@vitejs/plugin-vue@3.1.0(vite@3.1.0)(vue@3.5.22):
@@ -5059,6 +5073,15 @@ packages:
 
   /lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+
+  /lodash.clonedeep@4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: false
+
+  /lodash.isequal@4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
+    dev: false
 
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}

@@ -18,7 +18,7 @@ export default defineConfig({
 
   // #region fav
   head: [
-    ['link', { rel: 'icon', href: '/logo.png' }],
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
   ],
   // #endregion fav
 
@@ -209,7 +209,7 @@ export default defineConfig({
 
     // 编辑本页
     editLink: {
-      pattern: 'https://github.com/SSDWGG/vitePressBlog/blob/main/docs/:path', // 改成自己的仓库
+      pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path', // 改成自己的仓库
       text: '在Github编辑本页',
     },
 
@@ -287,6 +287,13 @@ export default defineConfig({
               { text: '永久链接', link: '/permalink/' },
             ],
           },
+        ],
+      },
+      {
+        text: 'wgg',
+        items: [
+          { text: '主页', link: '/wgg/personal' },
+          { text: '项目', link: '/wgg/project' },
         ],
       },
       {
@@ -403,7 +410,7 @@ export default defineConfig({
 
     // 社交链接
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/SSDWGG/vitePressBlog' },
+      { icon: 'github', link: 'https://github.com/SSDWGG/ssdwgg.github.io' },
       // { icon: 'twitter', link: 'https://twitter.com/' },
       // { icon: 'discord', link: 'https://chat.vitejs.dev/' },
       {
@@ -422,8 +429,7 @@ export default defineConfig({
     // 页脚
     footer: {
       message: 'Released under the MIT License.',
-      // href="https://github.com/SSDWGG"
-      copyright: `Copyright © 2026-至今 <a  target="_blank">任羿玮</a> 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">浙 ICP备2021009489号-2</a>`,
+      copyright: `Copyright © 2026-至今 <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a> 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">浙 ICP备2021009489号-2</a>`,
     },
 
     // 侧边栏文字更改(移动端)
