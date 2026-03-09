@@ -1,0 +1,52 @@
+{
+  "devDependencies": {
+    "@mdit-vue/shared": "^3.0.2",
+    "@types/dom-view-transitions": "^1.0.6",
+    "@types/node": "^24.7.1",
+    "busuanzi.pure.js": "^1.0.3",
+    "canvas-confetti": "^1.9.3",
+    "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "less": "^4.4.2",
+    "markdown-it-task-checkbox": "^1.0.6",
+    "medium-zoom": "^1.1.0",
+    "mermaid": "^11.12.0",
+    "nprogress-v2": "^1.1.10",
+    "sass": "^1.93.2",
+    "vitepress": "^1.6.4",
+    "vitepress-markdown-timeline": "^1.2.2",
+    "vitepress-plugin-comment-with-giscus": "^1.1.15",
+    "vitepress-plugin-group-icons": "^1.6.3",
+    "vitepress-plugin-mermaid": "^2.0.17",
+    "vue": "^3.5.22",
+    "xgplayer": "^3.0.23",
+    "svgaplayerweb": "^2.3.2",
+    "lodash-es": "^4.17.21"
+  },
+  "packageManager": "pnpm@8.6.10",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "svgaplayerweb": "^2.3.2",
+    "@antfu/eslint-config": "^0.26.3",
+    "@iconify-json/carbon": "^1.1.8",
+    "@types/canvas-confetti": "^1.4.3",
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^18.7.18",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "eslint": "^8.23.1",
+    "typescript": "^4.6.4",
+    "unocss": "^0.45.21",
+    "vite": "^3.1.0",
+    "vue-tsc": "^0.40.4",
+    "three": "^0.179.1",
+    "three-globe": "^2.45.0",
+    "@vueuse/core": "^10.11.1",
+    "gsap": "^3.13.0",
+    "@splinetool/runtime": "^1.12.39"
+  }
+}
