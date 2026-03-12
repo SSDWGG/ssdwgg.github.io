@@ -9,7 +9,7 @@ import MouseFollower from "./MouseFollower.vue";
 import backtotop from "./backtotop.vue"
 import bsz from "./bsz.vue"
 import MClick from "./MClick.vue";
-import BzdBg from './pbg/bzdBg.vue'
+import BzdBg from './pbg/BzdBg.vue'
 import LxBg from './pbg/LxBg/index.vue'
 
 
