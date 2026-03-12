@@ -14,7 +14,7 @@ hero:
   actions:
     - theme: brand
       text: 开始
-      link: /preface
+      link: /other/christmas-tree
     - theme: alt
       text: GitHub
       link: https://github.com/SSDWGG/ssdwgg.github.io

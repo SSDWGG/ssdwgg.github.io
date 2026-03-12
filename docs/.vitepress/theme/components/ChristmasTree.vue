@@ -41,10 +41,9 @@ onMounted(() => {
     <iframe
       ref="iframeRef"
       :src="iframeSrc"
-      width="100%"
-      height="800px"
-      frameborder="0"
       title="Christmas Draw"
+      style="width:100%; height: 100vh;border: none;" 
+
     />
   </div>
 </template>
