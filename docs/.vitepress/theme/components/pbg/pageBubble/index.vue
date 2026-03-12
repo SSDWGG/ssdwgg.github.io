@@ -17,9 +17,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- 底部泡泡 -->
-   <div h-screen w-screen absolute>
-      <canvas ref="bubbleCanvas" />
-    </div>
+  <canvas ref="bubbleCanvas" id="bubbleCanvas" style="height: 100vh; width: 100vw;position: fixed;top: 0;left: 0;" />
 </template>
 

@@ -18,8 +18,9 @@ const bubble: {
 }
 
 export const init = function (canvasInstance: HTMLCanvasElement) {
-  if (!bubble || !canvasInstance)
-    throw new Error('no canvasInstance')
+  if (!bubble || !canvasInstance) { 
+    return
+  }
   bubble.width = window.innerWidth
   bubble.height = window.innerHeight
   bubble.canvas = canvasInstance
@@ -69,10 +70,10 @@ class Circle {
   constructor() {
     this.pos = {
       x: Math.random() * bubble.width,
-      y: bubble.height + Math.random() * 100,
+      y: bubble.height + Math.random() * 150,
     }
-    this.alpha = 0.1 + Math.random() * 0.3
-    this.scale = 0.1 + Math.random() * 0.3
+    this.alpha = 0.3 + Math.random() * 0.3
+    this.scale = 0.2 + Math.random() * 0.3
     this.velocity = Math.random()
     const r: number = Math.random() * 255
     const g: number = Math.random() * 255

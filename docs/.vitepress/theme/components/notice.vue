@@ -7,7 +7,7 @@ function closetz() {
   visible.value = false
 }
 
-setTimeout(() => { visible.value = false }, 5000)
+setTimeout(() => { closetz() }, 5000)
 </script>
 
 <template>
@@ -23,7 +23,7 @@ setTimeout(() => { visible.value = false }, 5000)
       <div class="a">
         <div class="b">
           <a href="#">WGGのCRAD</a>
-          <h2>WX: Sunshine-RovF</h2>
+          <div class="m-lx-title">WX: Sunshine-RovF</div>
           <span>
             I'm Ren 
             <br />front-end developer 
@@ -54,10 +54,7 @@ setTimeout(() => { visible.value = false }, 5000)
   </div>
 </template>
 
-<style scoped>
-.notice-img {
-  z-index: 9999
-}
+<style scoped lang="less">
 
 /* 全屏遮罩层 */
 .notice-background {
@@ -71,12 +68,19 @@ setTimeout(() => { visible.value = false }, 5000)
   z-index: 99;
   pointer-events: none;
 }
+@media (max-width: 640px) {
+  .notice {
+    width: 82%;
+    padding: 25px;
+  }
+}
+
 
 /* 通知 */
 .notice {
   z-index: 999;
   padding: 25px;
-  background: #fff;
+  background: #f7dddd;
   width: 350px;
   position: fixed;
   top: 50%;
@@ -85,14 +89,8 @@ setTimeout(() => { visible.value = false }, 5000)
   border-radius: 18px;
   box-sizing: border-box;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05), 0 1.5rem 2.2rem rgba(0, 0, 0, 0.1);
-}
 
-@media (max-width: 640px) {
-  .notice {
-    width: 82%;
-    padding: 25px;
-  }
-}
+
 
 .notice-title {
   text-align: center;
@@ -208,12 +206,13 @@ setTimeout(() => { visible.value = false }, 5000)
   font-weight: 900;
 }
 
-.b h2 {
+.b .m-lx-title {
   color: #3c3c3c;
   font-size: 14px;
   transition: 0.5s 1s;
   opacity: 0;
   color: rgb(30, 210, 200);
+  line-height: 12px;
 }
 
 .b span {
@@ -275,7 +274,7 @@ setTimeout(() => { visible.value = false }, 5000)
   top: 40px;
 }
 
-.a:hover .b h2 {
+.a:hover .b .m-lx-title {
   transition: 1s 0.5s;
   opacity: 1;
 }
@@ -295,5 +294,6 @@ setTimeout(() => { visible.value = false }, 5000)
 .a:hover .f {
   transition: 1s 1.3s;
   opacity: 1;
+}
 }
 </style>

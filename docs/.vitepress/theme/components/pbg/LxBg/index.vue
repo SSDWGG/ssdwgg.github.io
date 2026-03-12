@@ -52,17 +52,11 @@ export default {
 </script>
 
 <template>
-  <div id="menu">
     <canvas id="LxCanvas" class="LxCanvas" />
-  </div>
 </template>
 
 <style scoped>
-#menu {
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
+
 
 .LxCanvas {
   position: fixed;

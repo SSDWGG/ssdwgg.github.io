@@ -37,6 +37,8 @@ import ChristmasRole from './components/ChristmasRole.vue' // 圣诞树角色
 import splineRole from './components/splineRole/index.vue' // spline 模型
 import NewYear from './components/newYear/index.vue' // 新的一年
 import notice from "./components/notice.vue"
+import pageBubble from './components/pbg/pageBubble/index.vue'
+import googleAnalytics from 'vitepress-plugin-google-analytics'
 
 // 彩虹背景动画样式
 let homePageStyle: HTMLStyleElement | undefined
@@ -66,6 +68,7 @@ export default {
     app.component('splineRole', splineRole)
     app.component('NewYear', NewYear)
     app.component('notice', notice)
+    app.component('pageBubble', pageBubble)
 
 
 
@@ -90,6 +93,11 @@ export default {
         { immediate: true },
       )
     }
+
+    // 谷歌分析
+    googleAnalytics({
+      id: 'G-H4WGS6WEN3', //跟踪ID，在analytics.google.com注册即可
+    })
   },
 
   // 导航

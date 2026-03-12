@@ -24,10 +24,14 @@ export default defineConfig({
 
   base: '/', // 网站部署到github的vitepress这个仓库里
 
-  // cleanUrls:true, //开启纯净链接无html
+  cleanUrls:true, //开启纯净链接无html
 
   // 启用深色模式
   appearance: 'dark',
+  // 站点地图
+  sitemap: {
+    hostname: 'https://ssdwgg.github.io',
+  },
 
   // 多语言
   locales: {
@@ -357,55 +361,75 @@ export default defineConfig({
 
     // Algolia搜索
     search: {
-      provider: 'algolia',
+      provider: 'local',
       options: {
-        appId: 'QVKQI62L15',
-        apiKey: 'bef8783dde57293ce082c531aa7c7e0c',
-        indexName: 'doc',
         locales: {
-          root: {
-            placeholder: '搜索文档',
+          zh: {
             translations: {
               button: {
                 buttonText: '搜索文档',
-                buttonAriaLabel: '搜索文档',
+                buttonAriaLabel: '搜索文档'
               },
               modal: {
-                searchBox: {
-                  // resetButtonTitle: '清除查询条件',
-                  // resetButtonAriaLabel: '清除查询条件',
-                  // cancelButtonText: '取消',
-                  // cancelButtonAriaLabel: '取消',
-                },
-                startScreen: {
-                  recentSearchesTitle: '搜索历史',
-                  noRecentSearchesText: '没有搜索历史',
-                  saveRecentSearchButtonTitle: '保存至搜索历史',
-                  removeRecentSearchButtonTitle: '从搜索历史中移除',
-                  favoriteSearchesTitle: '收藏',
-                  removeFavoriteSearchButtonTitle: '从收藏中移除',
-                },
-                errorScreen: {
-                  titleText: '无法获取结果',
-                  helpText: '你可能需要检查你的网络连接',
-                },
+                noResultsText: '无法找到相关结果',
+                resetButtonTitle: '清除查询条件',
                 footer: {
                   selectText: '选择',
-                  navigateText: '切换',
-                  closeText: '关闭',
-                  // searchByText: '搜索提供者',
-                },
-                noResultsScreen: {
-                  noResultsText: '无法找到相关结果',
-                  suggestedQueryText: '你可以尝试查询',
-                  reportMissingResultsText: '你认为该查询应该有结果？',
-                  reportMissingResultsLinkText: '点击反馈',
+                  navigateText: '切换'
                 },
               },
             },
           },
         },
-      },
+      },      // provider: 'algolia',
+      // options: {
+      //   appId: 'QVKQI62L15',
+      //   apiKey: 'bef8783dde57293ce082c531aa7c7e0c',
+      //   indexName: 'doc',
+      //   locales: {
+      //     root: {
+      //       placeholder: '搜索文档',
+      //       translations: {
+      //         button: {
+      //           buttonText: '搜索文档',
+      //           buttonAriaLabel: '搜索文档',
+      //         },
+      //         modal: {
+      //           searchBox: {
+      //             // resetButtonTitle: '清除查询条件',
+      //             // resetButtonAriaLabel: '清除查询条件',
+      //             // cancelButtonText: '取消',
+      //             // cancelButtonAriaLabel: '取消',
+      //           },
+      //           startScreen: {
+      //             recentSearchesTitle: '搜索历史',
+      //             noRecentSearchesText: '没有搜索历史',
+      //             saveRecentSearchButtonTitle: '保存至搜索历史',
+      //             removeRecentSearchButtonTitle: '从搜索历史中移除',
+      //             favoriteSearchesTitle: '收藏',
+      //             removeFavoriteSearchButtonTitle: '从收藏中移除',
+      //           },
+      //           errorScreen: {
+      //             titleText: '无法获取结果',
+      //             helpText: '你可能需要检查你的网络连接',
+      //           },
+      //           footer: {
+      //             selectText: '选择',
+      //             navigateText: '切换',
+      //             closeText: '关闭',
+      //             // searchByText: '搜索提供者',
+      //           },
+      //           noResultsScreen: {
+      //             noResultsText: '无法找到相关结果',
+      //             suggestedQueryText: '你可以尝试查询',
+      //             reportMissingResultsText: '你认为该查询应该有结果？',
+      //             reportMissingResultsLinkText: '点击反馈',
+      //           },
+      //         },
+      //       },
+      //     },
+      //   },
+      // },
     },
 
     // 社交链接
@@ -429,7 +453,7 @@ export default defineConfig({
     // 页脚
     footer: {
       message: 'Released under the MIT License.',
-      copyright: `Copyright © 2026-至今 <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a> 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">浙 ICP备2021009489号-2</a>`,
+      copyright: `Copyright © 2023-${new Date().getFullYear()} <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a> 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">浙 ICP备2021009489号-2</a>`,
     },
 
     // 侧边栏文字更改(移动端)

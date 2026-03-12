@@ -109,6 +109,9 @@ devDependencies:
   vitepress-plugin-comment-with-giscus:
     specifier: ^1.1.15
     version: 1.1.15(vue@3.5.22)
+  vitepress-plugin-google-analytics:
+    specifier: ^1.0.2
+    version: 1.0.2
   vitepress-plugin-group-icons:
     specifier: ^1.6.3
     version: 1.6.3(markdown-it@14.1.1)(vite@3.1.0)
@@ -6767,6 +6770,10 @@ packages:
       '@giscus/vue': 2.4.0(vue@3.5.22)
     transitivePeerDependencies:
       - vue
+    dev: true
+
+  /vitepress-plugin-google-analytics@1.0.2:
+    resolution: {integrity: sha512-ri8bFUAmt3c/DtPrALauGBIUr2gIJ11c1qNRhwd3/+aiuYZBfQpOosSxcO1AswgwRxP9FwBS6Z7jgdDVyXb2hA==}
     dev: true
 
   /vitepress-plugin-group-icons@1.6.3(markdown-it@14.1.1)(vite@3.1.0):

@@ -18,7 +18,7 @@ export default {
     }
 
     const dots = {
-      nb: 100,
+      nb: 200,
       distance: 100,
       d_radius: 150,
       array: [],
