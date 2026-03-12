@@ -140,10 +140,10 @@ export default {
 
     // giscus配置
     giscusTalk({
-      repo: 'Yiov/vitepress-doc', // 仓库
-      repoId: 'R_kgDOGYFl1A', // 仓库ID
+      repo: 'SSDWGG/ssdwgg.github.io', // 仓库
+      repoId: 'R_kgDOGG2Jjw', // 仓库ID
       category: 'General', // 讨论分类
-      categoryId: 'DIC_kwDOGYFl1M4CayLN', // 讨论分类ID
+      categoryId: 'DIC_kwDOGG2Jj84C4Nf7', // 讨论分类ID
       mapping: 'pathname',
       inputPosition: 'bottom',
       lang: 'zh-CN',

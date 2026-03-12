@@ -19,20 +19,21 @@ const updateLabels = (newLabels: string[]) => {
 
 onMounted(() => {
   updateLabels(['WGG', 'Happy', 'Christmas'])
+  // 监听来自iframe的消息（如果需要双向通信）
+  window.addEventListener('message', (event) => {
+    if (event.data.type === 'getLabelsRequest') {
+      // 响应iframe的请求，发送标签数据
+      if (iframeRef.value && iframeRef.value.contentWindow) {
+        iframeRef.value.contentWindow.postMessage({
+          type: 'setLabels',
+          labels: labels.value,
+        }, '*')
+      }
+    }
+  })
 })
 
-// 监听来自iframe的消息（如果需要双向通信）
-window.addEventListener('message', (event) => {
-  if (event.data.type === 'getLabelsRequest') {
-    // 响应iframe的请求，发送标签数据
-    if (iframeRef.value && iframeRef.value.contentWindow) {
-      iframeRef.value.contentWindow.postMessage({
-        type: 'setLabels',
-        labels: labels.value,
-      }, '*')
-    }
-  }
-})
+
 </script>
 
 <template>

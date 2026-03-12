@@ -5,10 +5,15 @@ import { groupIconMdPlugin, groupIconVitePlugin, localIconLoader } from 'vitepre
 import { MermaidMarkdown, MermaidPlugin } from 'vitepress-plugin-mermaid'
 import { devDependencies } from '../../package.json'
 import timeline from "vitepress-markdown-timeline"; // [!code focus]
+import { generateSidebar } from 'vitepress-sidebar';
 
 import { usePosts } from './theme/untils/permalink'
 
 const { rewrites } = await usePosts()
+
+const vitepressSidebarOptions = {
+  /* Options... */
+};
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -228,22 +233,8 @@ export default defineConfig({
     // 导航栏
     nav: [
       { text: '首页', link: '/' },
-      {
-        text: '🍉指南',
-        items: [
-          {
-            text: '电子书籍',
-            items: [
-              { text: 'JS高级程序设计', link: '/frontEnd/book/advancedProgramming' },
-              { text: '面试宝典', link: '/frontEnd/book/interview' },
-              { text: 'css揭秘', link: '/frontEnd/book/css' },
-              { text: '代码整洁之道', link: '/frontEnd/book/code' },
-              { text: '算法详解', link: '/frontEnd/book/algorithm' },
-            ],
-          },
-        ],
-      },
-      { text: `VitePress 中文网址`, link: 'https://vitepress.dev/zh/', noIcon: true },
+      { text: 'WGG🍉', link: '/wgg/personal' },
+      { text: `导航`, link: '/wgg/project' },
       { text: '更新日志', link: '/changelog' },
     ],
 
@@ -291,13 +282,6 @@ export default defineConfig({
               { text: '永久链接', link: '/permalink/' },
             ],
           },
-        ],
-      },
-      {
-        text: 'wgg',
-        items: [
-          { text: '主页', link: '/wgg/personal' },
-          { text: '项目', link: '/wgg/project' },
         ],
       },
       {
@@ -358,6 +342,50 @@ export default defineConfig({
         ],
       },
     ],
+    // sidebar: generateSidebar({
+    //   /*
+    //    * For detailed instructions, see the links below:
+    //    * https://vitepress-sidebar.jooy2.com/guide/api
+    //    */
+    //   documentRootPath: '/docs', //文档根目录
+    //   // scanStartPath: null,
+    //   // resolvePath: null,
+    //   // useTitleFromFileHeading: true,
+    //   // useTitleFromFrontmatter: true,
+    //   // frontmatterTitleFieldName: 'title',
+    //   // useFolderTitleFromIndexFile: false, //是否使用层级首页文件名做分级标题
+    //   // useFolderLinkFromIndexFile: false, //是否链接至层级首页文件
+    //   // hyphenToSpace: true,
+    //   // underscoreToSpace: true,
+    //   // capitalizeFirst: false,
+    //   // capitalizeEachWords: false,
+    //   collapsed: false, //折叠组关闭
+    //   collapseDepth: 2, //折叠组2级菜单
+    //   // sortMenusByName: false,
+    //   // sortMenusByFrontmatterOrder: false,
+    //   // sortMenusByFrontmatterDate: false,
+    //   // sortMenusOrderByDescending: false,
+    //   // sortMenusOrderNumericallyFromTitle: false,
+    //   // sortMenusOrderNumericallyFromLink: false,
+    //   // frontmatterOrderDefaultValue: 0,
+    //   // manualSortFileNameByPriority: ['first.md', 'second', 'third.md'], //手动排序，文件夹不用带后缀
+    //   removePrefixAfterOrdering: false, //删除前缀，必须与prefixSeparator一起使用
+    //   prefixSeparator: '.', //删除前缀的符号
+    //   // excludeFiles: ['first.md', 'secret.md'],
+    //   // excludeFilesByFrontmatterFieldName: 'exclude',
+    //   // excludeFolders: ['secret-folder'],
+    //   // includeDotFiles: false,
+    //   // includeRootIndexFile: false,
+    //   // includeFolderIndexFile: false, //是否包含层级主页
+    //   // includeEmptyFolder: false,
+    //   // rootGroupText: 'Contents',
+    //   // rootGroupLink: 'https://github.com/jooy2',
+    //   // rootGroupCollapsed: false,
+    //   // convertSameNameSubFileToGroupIndexPage: false,
+    //   // folderLinkNotIncludesFileName: false,
+    //   // keepMarkdownSyntaxFromTitle: false,
+    //   // debugPrint: false,
+    // }),
 
     // Algolia搜索
     search: {

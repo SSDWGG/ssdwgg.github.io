@@ -1,3 +1,10 @@
+---
+layout: home
+---
+
+<HomeUnderline />
+
+<confetti />
 
 
 <!-- 弹窗卡片 -->

@@ -6,7 +6,7 @@
 
 
 ## 插入排序
-```
+```js
 function insertSort(array){
 for(let i = 0; i < array.length; i++){
  let preIndex = i - 1, cur = array[i];
@@ -24,7 +24,7 @@ return array;
 
 
 ## 希尔排序
-```
+```js
 function shellSort(arr){
 let len = arr.length, gap, temp;
 // 缩小增量gap
@@ -49,7 +49,8 @@ return arr;
 
 ## 选择排序
 
-```function selectionSort(array, flag = false) { // flag用于选择顺序 
+```js
+function selectionSort(array, flag = false) { // flag用于选择顺序 
 for(let i = 0; i < array.length - 1; i++){
  let minIndex = i;
  for(let j = i + 1; j < array.length; j++){
@@ -66,7 +67,7 @@ return flag ? arr.reverse() : arr;
 
 ## 堆排序
 
-```
+```js
 /*
 * 维护堆的性质
 * @param arr 存储堆的数组
@@ -116,7 +117,7 @@ return arr;
 
 
 ## 归并排序
-```
+```js
 // 分割数组时直接将数组分割为两个数组，合并时直接合并数组
 function mergeSort(array){
 if(array.length < 2){
@@ -152,7 +153,7 @@ return result;
 
 
 ## 基数排序
-```
+```js
 function radixSort(arr) {
 let maxLen = 0;
 // 算出最大值的位数
@@ -196,7 +197,7 @@ return result;
 
 
 ## 计数排序
-```
+```js
 function countingSort(arr, flag = 0){
 let min = arr[0], max = arr[0], len = arr.length;
 // 求最大最小值
@@ -232,7 +233,7 @@ return flag ? res.reverse() : res;
 
 
 ## 快速排序
-```
+```js
 /*
 * 法一：开辟left和right两个空间来存储
 * 每次递归返回left、target、right拼接后的数组
@@ -285,7 +286,7 @@ return array;
 
 
 ## 冒泡排序
-```
+```js
 function bubbleSort(array){
  for(let i = 0; i < array.length; i++){
  let flag = true;
@@ -319,7 +320,7 @@ return array;
 - f(1) = 1, f(2) = 2 就是边界啦
 - 比如f(10)= f(9)+f(8),f(9) = f(8) + f(7) ,f(8)就是重叠子问题。
 
-```
+```js
 const numWays = (n) => {
   if (n <= 1) {
     return 1;
@@ -344,7 +345,7 @@ console.log(numWays(20));  //10946
 
 vue3的diff采用的是对比最长递增子序列，接下来了解一下动态规划的思路解法
 
-```
+```js
 const lengthOfLIS = (nums)=>{
   if (nums.length == 0) {
     return 0;

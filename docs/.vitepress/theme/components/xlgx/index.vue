@@ -83,7 +83,6 @@ function handleLose() {
   loseAudioRef.value?.play()
   setTimeout(() => {
     alert('槽位已满，再接再厉~')
-    // window.location.reload()
     nodes.value = []
     removeList.value = []
     selectedNodes.value = []
