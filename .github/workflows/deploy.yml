@@ -56,6 +56,25 @@ jobs:
           echo "SSH_PRIVATE_KEY 前50字符: ${SSH_PRIVATE_KEY:0:50}"
           echo "SSH_PRIVATE_KEY 后50字符: ${SSH_PRIVATE_KEY: -50}"
           echo "=================="
+          
+          # 检查SSH密钥格式
+          echo "=== 检查SSH密钥格式 ==="
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/test_key
+          chmod 600 ~/.ssh/test_key
+          
+          # 测试密钥格式
+          if ssh-keygen -l -f ~/.ssh/test_key >/dev/null 2>&1; then
+            echo "✅ SSH密钥格式正确"
+            ssh-keygen -l -f ~/.ssh/test_key
+          else
+            echo "❌ SSH密钥格式错误"
+            echo "密钥内容预览:"
+            head -n 3 ~/.ssh/test_key
+            echo "..."
+            tail -n 3 ~/.ssh/test_key
+          fi
+          echo "=================="
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -105,8 +124,36 @@ jobs:
           TARGET_DIR: "/www/wwwroot/ryw_yun_project/wgg_project"
           RSYNC_ARGS: "-avz --delete"
 
-      # 9. 【新增】部署到远程服务器 (SSH)
-      # 此时 dist 目录就在 docs/.vitepress/dist，直接使用
+      # 9. 【新增】修复SSH密钥格式（如果需要）
+      - name: Fix SSH Key Format
+        run: |
+          echo "=== 修复SSH密钥格式 ==="
+          mkdir -p ~/.ssh
+          
+          # 清理密钥中的换行符和空格
+          CLEAN_KEY=$(echo "$SSH_PRIVATE_KEY" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
+          echo "$CLEAN_KEY" > ~/.ssh/fixed_key
+          chmod 600 ~/.ssh/fixed_key
+          
+          # 验证修复后的密钥
+          if ssh-keygen -l -f ~/.ssh/fixed_key >/dev/null 2>&1; then
+            echo "✅ 修复后的SSH密钥格式正确"
+            ssh-keygen -l -f ~/.ssh/fixed_key
+            # 导出修复后的密钥供后续步骤使用
+            echo "$CLEAN_KEY" > ~/.ssh/deploy_key
+            chmod 600 ~/.ssh/deploy_key
+          else
+            echo "❌ 无法修复SSH密钥格式"
+            echo "请检查GitHub Secrets中的SSH_PRIVATE_KEY格式"
+            exit 1
+          fi
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+
+      # 10. 【新增】使用修复后的密钥部署到远程服务器
       - name: Deploy to Remote Server
         uses: easingthemes/ssh-deploy@v4
         with:
@@ -118,6 +165,7 @@ jobs:
           TARGET: "/www/wwwroot/ryw_yun_project/wgg_project" 
           ARGS: "-avz --delete"
           # 添加详细日志输出
+          EXTRA_RSYNC_ARGS: "-vv"
           EXTRA_RSYNC_ARGS: "-vv"
 
       # 10. 【新增】调试：验证部署结果
