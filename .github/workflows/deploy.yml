@@ -78,7 +78,34 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           TARGET_DIR: "/www/wwwroot/ryw_yun_project/wgg_project"
 
-      # 8. 【新增】部署到远程服务器 (SSH)
+      # 8. 【新增】调试：手动测试rsync部署
+      - name: Debug Manual Rsync
+        run: |
+          echo "=== 手动测试rsync部署 ==="
+          # 创建临时私钥文件
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+          
+          # 检查源目录内容
+          echo "源目录内容:"
+          ls -la $SOURCE_DIR
+          
+          # 测试rsync命令
+          echo "测试rsync命令:"
+          rsync $RSYNC_ARGS -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key" $SOURCE_DIR $SSH_USER@$SSH_HOST:$TARGET_DIR --dry-run -vv
+          
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SOURCE_DIR: "docs/.vitepress/dist/"
+          TARGET_DIR: "/www/wwwroot/ryw_yun_project/wgg_project"
+          RSYNC_ARGS: "-avz --delete"
+
+      # 9. 【新增】部署到远程服务器 (SSH)
       # 此时 dist 目录就在 docs/.vitepress/dist，直接使用
       - name: Deploy to Remote Server
         uses: easingthemes/ssh-deploy@v4
@@ -90,6 +117,32 @@ jobs:
           SOURCE: "docs/.vitepress/dist/" 
           TARGET: "/www/wwwroot/ryw_yun_project/wgg_project" 
           ARGS: "-avz --delete"
+          # 添加详细日志输出
+          EXTRA_RSYNC_ARGS: "-vv"
+
+      # 10. 【新增】调试：验证部署结果
+      - name: Verify Deployment
+        run: |
+          echo "=== 验证部署结果 ==="
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+          
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key $SSH_USER@$SSH_HOST "
+            echo '远程目录内容:';
+            ls -la $TARGET_DIR;
+            echo '检查index.html:';
+            ls -la $TARGET_DIR/index.html 2>/dev/null || echo 'index.html不存在';
+            echo '检查文件数量:';
+            find $TARGET_DIR -type f | wc -l;
+          "
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          TARGET_DIR: "/www/wwwroot/ryw_yun_project/wgg_project"
 
       # 7. 上传 artifact 供 GitHub Pages 部署使用
       - name: Upload artifact
