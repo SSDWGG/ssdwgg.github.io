@@ -1,22 +1,21 @@
 ---
 layout: home
 footer: false
+pageClass: hiddenBszPage
+
 ---
 
 <iframe 
-  style="width:100%; height: 70vh;border: none;" 
+  style="width:100%; height: 100vh;border: none;" 
   src="https://mywebsite.ssdwgg.site/" 
 />
 
 
 
-<!-- <HomeUnderline />
-
 <confetti />
 
 <notice/>
 
-<pageBubble/> 
--->
+
 
     

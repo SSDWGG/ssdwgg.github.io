@@ -1,60 +1,108 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
-const visible = ref(true)
+const visible = ref(false)
+const showNotice = ref(false)
+const autoHover = ref(false)
 
 function closetz() {
-  visible.value = false
+  showNotice.value = false
+  setTimeout(() => {
+    visible.value = false
+  }, 300)
 }
 
-setTimeout(() => { closetz() }, 5000)
+onMounted(() => {
+  visible.value = true
+  setTimeout(() => {
+    showNotice.value = true
+    // 延迟触发自动hover效果
+    setTimeout(() => {
+      autoHover.value = true
+    }, 800)
+  }, 50)
+
+  setTimeout(() => { closetz() }, 5000)
+})
 </script>
 
 <template>
-  <div v-if="visible" class="notice-background" style="display: block;" />
+  <Transition name="fade">
+    <div v-if="visible" class="notice-background" />
+  </Transition>
 
-  <div v-if="visible" class="notice">
-    <h3 class="notice-title">
-      Developer Info
-    </h3>
+  <Transition name="slide-fade">
+    <div v-if="showNotice" class="notice" >
+      <h3 class="notice-title">
+        WGGのCRAD
+      </h3>
 
-    <div class="notice-describe">
-      <!-- 名片分三大块 最外层的一块a、文字一大块b、平面圆柱一块c -->
-      <div class="a">
-        <div class="b">
-          <a href="#">WGGのCRAD</a>
-          <div class="m-lx-title">WX: Sunshine-RovF</div>
-          <span>
-            I'm Ren 
-            <br />front-end developer 
-            <br />In the days to come
-            <br />Keep going!!
-            <br />
-          </span>
-        </div>
-        <div class="c">
-          <!-- --i是用来计算平面圆柱的动效延迟和距离的
+      <div class="notice-describe" :class="{ 'auto-hover': autoHover }">
+        <!-- 名片分三大块 最外层的一块a、文字一大块b、平面圆柱一块c -->
+        <div class="a">
+          <div class="b">
+            <a href="#">WGGのCRAD</a>
+            <div class="m-lx-title">WX: Sunshine-RovF</div>
+            <span>
+              I'm Ren
+              <br />front-end developer
+              <br />In the days to come
+              <br />Keep going!!
+              <br />
+            </span>
+          </div>
+          <div class="c">
+            <!-- --i是用来计算平面圆柱的动效延迟和距离的
             --w则是用来计算平面圆柱的宽度 -->
-          <div class="d" style="--i: 1; --w: 1.5"></div>
-          <div class="d" style="--i: 2; --w: 1.6"></div>
-          <div class="d" style="--i: 3; --w: 1.4"></div>
-          <div class="d" style="--i: 4; --w: 1.7"></div>
-          <div class="e" style="--i: 1"></div>
+            <div class="d" style="--i: 1; --w: 1.5"></div>
+            <div class="d" style="--i: 2; --w: 1.6"></div>
+            <div class="d" style="--i: 3; --w: 1.4"></div>
+            <div class="d" style="--i: 4; --w: 1.7"></div>
+            <div class="e" style="--i: 1"></div>
+          </div>
+          <!-- 设置二维码 -->
+          <div class="f"></div>
         </div>
-        <!-- 设置二维码 -->
-        <div class="f"></div>
       </div>
-    </div>
 
-    <div class="notice-footer">
-      <div class="notice-btn" @click="closetz">
-        Got it
+      <div class="notice-footer">
+        <div class="notice-btn" @click="closetz">
+          Got it
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped lang="less">
+/* 过渡动画 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from {
+  transform: translateX(-50%) translateY(-60%);
+  opacity: 0;
+}
+
+.slide-fade-leave-to {
+  transform: translateX(-50%) translateY(-40%);
+  opacity: 0;
+}
 
 /* 全屏遮罩层 */
 .notice-background {
@@ -64,10 +112,10 @@ setTimeout(() => { closetz() }, 5000)
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: none;
   z-index: 99;
   pointer-events: none;
 }
+
 @media (max-width: 640px) {
   .notice {
     width: 82%;
@@ -92,67 +140,67 @@ setTimeout(() => { closetz() }, 5000)
 
 
 
-.notice-title {
-  text-align: center;
-  color: #3c3c3c;
-  font-size: 20px;
-  font-weight: 900;
-  margin-bottom: 20px;
-}
+  .notice-title {
+    text-align: center;
+    color: #3c3c3c;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
 
-.notice-describe p {
-  color: #3c3c3c;
-  padding: 10px 0;
-  font-size: 15px;
-}
+  .notice-describe p {
+    color: #3c3c3c;
+    padding: 10px 0;
+    font-size: 15px;
+  }
 
-.notice-describe p strong {
-  color: #3c3c3c;
-}
+  .notice-describe p strong {
+    color: #3c3c3c;
+  }
 
-.notice-describe p a {
-  color: #eb0e0e;
-}
+  .notice-describe p a {
+    color: #eb0e0e;
+  }
 
-.notice-domain {
-  background: #f3f5f7;
-  text-align: center;
-  border-radius: 10px;
-}
+  .notice-domain {
+    background: #f3f5f7;
+    text-align: center;
+    border-radius: 10px;
+  }
 
-/* 通知底部 */
-.notice-footer {
-  padding: 20px 0 0;
-  text-align: center;
-}
+  /* 通知底部 */
+  .notice-footer {
+    padding: 20px 0 0;
+    text-align: center;
+  }
 
-.notice-btn {
-  text-align: center;
-  cursor: pointer;
-  border-radius: 50px;
-  font-weight: 700;
-  padding: 0 30px;
-  color: #fff;
-  background: linear-gradient(to right, #1e69f5 0%, #093ce5 100%);
-  box-shadow: 0 10px 12px -4px rgb(0 0 0 / 40%);
-  line-height: 40px;
-  font-size: 14px;
-  display: inline-block;
-  text-wrap: nowrap;
-}
+  .notice-btn {
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 700;
+    padding: 0 30px;
+    color: #fff;
+    background: linear-gradient(to right, #1e69f5 0%, #093ce5 100%);
+    box-shadow: 0 10px 12px -4px rgb(0 0 0 / 40%);
+    line-height: 40px;
+    font-size: 14px;
+    display: inline-block;
+    text-wrap: nowrap;
+  }
 
 
 
-.a {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.445);
-  filter: drop-shadow(4px 4px 5px rgba(0, 0, 0, 0.164));
-  z-index: 10;
-  font-family: sans-serif;
+  .a {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.445);
+    filter: drop-shadow(4px 4px 5px rgba(0, 0, 0, 0.164));
+    z-index: 10;
+    font-family: sans-serif;
     background-color: #e493d0;
     background-image: radial-gradient(closest-side, rgba(235, 105, 78, 1), rgba(235, 105, 78, 0)),
       radial-gradient(closest-side, rgba(243, 11, 164, 1), rgba(243, 11, 164, 0)),
@@ -163,9 +211,12 @@ setTimeout(() => { closetz() }, 5000)
     background-position: -80vmax -80vmax, 60vmax -30vmax, 10vmax 10vmax, -30vmax -10vmax, 50vmax 50vmax;
     background-repeat: no-repeat;
     animation: 10s movement linear infinite;
-}
+  }
+
+
 
   @keyframes movement {
+
     0%,
     100% {
       background-size: 130vmax 130vmax, 80vmax 80vmax, 90vmax 90vmax, 110vmax 110vmax, 90vmax 90vmax;
@@ -189,111 +240,138 @@ setTimeout(() => { closetz() }, 5000)
   }
 
 
-.b {
-  position: absolute;
-  width: 200px;
-  height: 100%;
-  left: 0;
-  margin: 20px;
-  transition: 1s;
-  color: #3c3c3c;
-}
+  .b {
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    left: 0;
+    margin: 20px;
+    transition: 1s;
+    color: #3c3c3c;
+  }
 
-.b a {
-  text-decoration: none;
-  color: #3c3c3c;
-  font-size: 18px;
-  font-weight: 900;
-}
+  .b a {
+    text-decoration: none;
+    color: #3c3c3c;
+    font-size: 18px;
+    font-weight: 900;
+  }
 
-.b .m-lx-title {
-  color: #3c3c3c;
-  font-size: 14px;
-  transition: 0.5s 1s;
-  opacity: 0;
-  color: rgb(30, 210, 200);
-  line-height: 12px;
-}
+  .b .m-lx-title {
+    color: #3c3c3c;
+    font-size: 14px;
+    transition: 0.5s 1s;
+    opacity: 0;
+    color: rgb(30, 210, 200);
+    line-height: 12px;
+  }
 
-.b span {
-  transition: 0.5s 1s;
-  color: #3c3c3c;
+  .b span {
+    transition: 0.5s 1s;
+    color: #3c3c3c;
 
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 30px;
-  font-size: 12px;
-  font-weight: 500;
-}
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 30px;
+    font-size: 12px;
+    font-weight: 500;
+  }
 
-.c {
-  position: absolute;
-  top: -270px;
-  right: -170px;
-}
+  .c {
+    position: absolute;
+    top: -270px;
+    right: -170px;
+  }
 
-.d,
-.e {
-  position: absolute;
-  right: calc(var(--i) * 40px);
-  width: calc(var(--w) * 13px);
-  height: 500px;
-  overflow: hidden;
-  border-radius: 10px;
-  transform: rotateZ(220deg) translate(0, 0);
-  background: rgb(240, 220, 150);
-  transition: 0.5s 0.5s;
-}
+  .d,
+  .e {
+    position: absolute;
+    right: calc(var(--i) * 40px);
+    width: calc(var(--w) * 13px);
+    height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    transform: rotateZ(220deg) translate(0, 0);
+    background: rgb(240, 220, 150);
+    transition: 0.5s 0.5s;
+  }
 
-.d:nth-child(2) {
-  background: rgb(240, 190, 230);
-}
+  .d:nth-child(2) {
+    background: rgb(240, 190, 230);
+  }
 
-.e {
-  left: -150px;
-  top: -90px;
-  width: 20px;
-  background-color: rgb(90, 220, 150);
-}
+  .e {
+    left: -150px;
+    top: -90px;
+    width: 20px;
+    background-color: rgb(90, 220, 150);
+  }
 
-.a:hover .c div {
-  /* 设置延迟动画 */
-  transition: 0.5s calc(var(--i) * 0.1s);
-  /* 移动的轨迹 */
-  transform: rotateZ(220deg) translate(-200px, 400px);
-}
+  .a:hover .c div {
+    /* 设置延迟动画 */
+    transition: 0.5s calc(var(--i) * 0.1s);
+    /* 移动的轨迹 */
+    transform: rotateZ(220deg) translate(-200px, 400px);
+  }
 
-.a:hover .b {
-  transition: 1s 0.5s;
-  left: 120px;
-}
+  .a:hover .b {
+    transition: 1s 0.5s;
+    left: 120px;
+  }
 
-.a:hover .b span {
-  transition: 1s 0.5s;
-  top: 40px;
-}
+  .a:hover .b span {
+    transition: 1s 0.5s;
+    top: 40px;
+  }
 
-.a:hover .b .m-lx-title {
-  transition: 1s 0.5s;
-  opacity: 1;
-}
+  .a:hover .b .m-lx-title {
+    transition: 1s 0.5s;
+    opacity: 1;
+  }
 
-.f {
-  width: 120px;
-  height: 120px;
-  position: absolute;
-  background-image: url('/wechat.png');
-  background-size: cover;
-  margin: 14px;
-  margin-top: 30px;
-  opacity: 0;
-  transition: 0.5s;
-}
+  .f {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    background-image: url('/wechat.png');
+    background-size: cover;
+    margin: 14px;
+    margin-top: 30px;
+    opacity: 0;
+    transition: 0.5s;
+  }
 
-.a:hover .f {
-  transition: 1s 1.3s;
-  opacity: 1;
-}
+  .a:hover .f {
+    transition: 1s 1.3s;
+    opacity: 1;
+  }
+
+  /* 自动hover效果 */
+  .auto-hover .a .c div {
+    transition: 0.5s calc(var(--i) * 0.1s);
+    transform: rotateZ(220deg) translate(-200px, 400px);
+  }
+
+  .auto-hover .a .b {
+    transition: 1s 0.5s;
+    left: 120px;
+  }
+
+  .auto-hover .a .b span {
+    transition: 1s 0.5s;
+    top: 40px;
+  }
+
+  .auto-hover .a .b .m-lx-title {
+    transition: 1s 0.5s;
+    opacity: 1;
+  }
+
+  .auto-hover .a .f {
+    transition: 1s 1.3s;
+    opacity: 1;
+  }
+
 }
 </style>

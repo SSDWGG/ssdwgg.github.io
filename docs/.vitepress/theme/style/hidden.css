@@ -40,3 +40,22 @@
 .divider {
     display: none;
 }
+
+.hiddenBszPage {
+  .busuanzi{
+    display: none;
+
+  }
+  .container{
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+  }
+  .VPHome{
+    margin: 0;
+  }
+  .VPContent{
+    padding: 0;
+  }
+}
+/*  */
