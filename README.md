@@ -6,12 +6,10 @@
 
 ## 介绍
 
-WPD是一个基于vitepress文档的个人文档网站，用于记录个人学习和工作中的一些经验和知识。
+WPD是一个基于vitepress文档的个性化文档模板
 
 ## 演示
 
-[预览访问地址1](http://ssdwgg.site/)
+[预览访问地址:http://ssdwgg.site/](http://ssdwgg.site/)
 
-[预览访问地址2](https://ssdwgg.github.io/)
-
-[VitePress教程示范地址](https://vitepress.dev/zh/)
+[预览访问地址:https://ssdwgg.github.io/](https://ssdwgg.github.io/)
