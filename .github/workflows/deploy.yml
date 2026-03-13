@@ -153,19 +153,28 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
 
-      # 10. 【新增】使用修复后的密钥部署到远程服务器
+      # 10. 【新增】使用修复后的密钥手动部署到远程服务器
       - name: Deploy to Remote Server
-        uses: easingthemes/ssh-deploy@v4
-        with:
+        run: |
+          echo "=== 开始手动部署 ==="
+          
+          # 使用修复后的密钥进行rsync部署
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/fixed_key" \
+            docs/.vitepress/dist/ \
+            $SSH_USER@$SSH_HOST:/www/wwwroot/ryw_yun_project/wgg_project/
+          
+          # 检查部署结果
+          if [ $? -eq 0 ]; then
+            echo "✅ 部署成功"
+          else
+            echo "❌ 部署失败"
+            exit 1
+          fi
+          echo "=================="
+        env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          # 源路径：直接指向构建生成的目录内容
-          SOURCE: "docs/.vitepress/dist/" 
-          TARGET: "/www/wwwroot/ryw_yun_project/wgg_project" 
-          ARGS: "-avz --delete"
-          # 添加详细日志输出
-          EXTRA_RSYNC_ARGS: "-vv"
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
 
       # 10. 【新增】调试：验证部署结果
       - name: Verify Deployment
