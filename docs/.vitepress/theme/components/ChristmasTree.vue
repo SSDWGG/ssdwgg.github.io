@@ -18,7 +18,7 @@ const updateLabels = (newLabels: string[]) => {
 }
 
 onMounted(() => {
-  updateLabels(['WGG', 'Happy', 'Christmas'])
+  updateLabels(['Happy', 'every', 'day'])
   // 监听来自iframe的消息（如果需要双向通信）
   window.addEventListener('message', (event) => {
     if (event.data.type === 'getLabelsRequest') {
