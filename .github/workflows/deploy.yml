@@ -70,7 +70,7 @@ jobs:
         with:
           path: docs/.vitepress/dist
 
-  # 部署到 GitHub Pages 任务 (必须依赖上面的 build 完成)
+  # 部署到 GitHub Pages 任务 (依赖上面的 build 完成)
   deploy-github:
     environment:
       name: github-pages
