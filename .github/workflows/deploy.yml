@@ -51,7 +51,22 @@ jobs:
           ls -R docs/.vitepress/dist
           echo "==================="
 
-      # 7. 【新增】部署到远程服务器 (SSH)
+      # 7. 【新增】调试：检查secrets值
+      - name: Debug Secrets
+        run: |
+          echo "=== 调试secrets值 ==="
+          echo "SSH_PRIVATE_KEY 长度: ${#SSH_PRIVATE_KEY}"
+          echo "SSH_HOST: $SSH_HOST"
+          echo "SSH_USER: $SSH_USER"
+          echo "SSH_PRIVATE_KEY 前50字符: ${SSH_PRIVATE_KEY:0:50}"
+          echo "SSH_PRIVATE_KEY 后50字符: ${SSH_PRIVATE_KEY: -50}"
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+
+      # 8. 【新增】部署到远程服务器 (SSH)
       # 此时 dist 目录就在 docs/.vitepress/dist，直接使用
       - name: Deploy to Remote Server
         uses: easingthemes/ssh-deploy@v4
