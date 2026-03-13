@@ -166,7 +166,6 @@ jobs:
           ARGS: "-avz --delete"
           # 添加详细日志输出
           EXTRA_RSYNC_ARGS: "-vv"
-          EXTRA_RSYNC_ARGS: "-vv"
 
       # 10. 【新增】调试：验证部署结果
       - name: Verify Deployment
