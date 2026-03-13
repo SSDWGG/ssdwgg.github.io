@@ -25,9 +25,6 @@ body {
 .wechatOA {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   height: var(--vh);
 }
 
@@ -49,7 +46,6 @@ body {
 
 .qrcode {
   width: 256px;
-  height: 256px;
   display: flex;
   border-radius: 12px;
 }
