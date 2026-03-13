@@ -1,9 +1,12 @@
 ---
 layout: home
+footer: false
 ---
-<newYear />
-
-
+<iframe 
+style="width:100%; height: 70vh;border: none;" 
+src="http://mywebsite.ssdwgg.site/" 
+>
+</iframe>
 
 
 <!-- <HomeUnderline />
