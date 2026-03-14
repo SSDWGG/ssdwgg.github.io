@@ -1,205 +1,210 @@
-# 构建 VitePress 站点并将其部署到 GitHub Pages 的示例工作流程
-#
-name: Deploy VitePress site to Pages
-
+name: Deploy VitePress to Pages and Server
 on:
-  # 在针对 `main` 分支的推送上运行。如果你
-  # 使用 `master` 分支作为默认分支，请将其更改为 `master`
   push:
     branches: [main]
-
-  # 允许你从 Actions 选项卡手动运行此工作流程
   workflow_dispatch:
 
-# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 只允许同时进行一次部署，跳过正在运行和最新队列之间的运行队列
-# 但是，不要取消正在进行的运行，因为我们希望允许这些生产部署完成
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  # 构建工作
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1. 检出代码
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
-      - uses: pnpm/action-setup@v4 # 如果使用 pnpm，请取消此区域注释
+          fetch-depth: 0
+
+      # 2. 设置 pnpm
+      - uses: pnpm/action-setup@v4
         with:
           version: 8.6.10
-      # - uses: oven-sh/setup-bun@v1 # 如果使用 Bun，请取消注释
+
+      # 3. 设置 Node
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm # 或 pnpm / yarn
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+          cache: pnpm
+
+      # 4. 安装依赖
       - name: Install dependencies
-        run: pnpm install # 或 pnpm install / yarn install / bun install
+        run: pnpm install
+
+      # 5. 构建站点
       - name: Build with VitePress
-        run: pnpm docs:build # 或 pnpm docs:build / yarn docs:build / bun run docs:build
+        run: pnpm docs:build
+
+      # 9. 【新增】修复SSH密钥格式（如果需要）
+      - name: Fix SSH Key Format
+        run: |
+          echo "=== 修复SSH密钥格式 ==="
+          mkdir -p ~/.ssh
+          
+          # 清理密钥中的换行符和空格
+          CLEAN_KEY=$(echo "$SSH_PRIVATE_KEY" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
+          echo "$CLEAN_KEY" > ~/.ssh/fixed_key
+          chmod 600 ~/.ssh/fixed_key
+          
+          # 验证修复后的密钥
+          if ssh-keygen -l -f ~/.ssh/fixed_key >/dev/null 2>&1; then
+            echo "✅ 修复后的SSH密钥格式正确"
+            ssh-keygen -l -f ~/.ssh/fixed_key
+            # 导出修复后的密钥供后续步骤使用
+            echo "$CLEAN_KEY" > ~/.ssh/deploy_key
+            chmod 600 ~/.ssh/deploy_key
+          else
+            echo "❌ 无法修复SSH密钥格式"
+            echo "请检查GitHub Secrets中的SSH_PRIVATE_KEY格式"
+            exit 1
+          fi
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+
+      # 10. 【新增】使用修复后的密钥手动部署到远程服务器
+      - name: Deploy to Remote Server
+        run: |
+          echo "=== 开始手动部署 ==="
+          
+          # 使用修复后的密钥进行rsync部署
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/fixed_key" \
+            docs/.vitepress/dist/ \
+            $SSH_USER@$SSH_HOST:/www/wwwroot/ryw_yun_project/wgg_project/
+          
+          # 检查部署结果
+          if [ $? -eq 0 ]; then
+            echo "✅ 部署成功"
+          else
+            echo "❌ 部署失败"
+            exit 1
+          fi
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+
+      # 10. 【新增】调试：验证部署结果
+      - name: Verify Deployment
+        run: |
+          echo "=== 验证部署结果 ==="
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+          
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key $SSH_USER@$SSH_HOST "
+            echo '远程目录内容:';
+            ls -la $TARGET_DIR;
+            echo '检查index.html:';
+            ls -la $TARGET_DIR/index.html 2>/dev/null || echo 'index.html不存在';
+            echo '检查文件数量:';
+            find $TARGET_DIR -type f | wc -l;
+          "
+          echo "=================="
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          TARGET_DIR: "/www/wwwroot/ryw_yun_project/wgg_project"
+
+      # 7. 上传 artifact 供 GitHub Pages 部署使用
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
 
-  # 部署工作
-  deploy:
+  # 部署到 GitHub Pages 任务 (依赖上面的 build 完成)
+  deploy-github:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
+    needs: build-and-deploy
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy to GitHub Pages
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
-# name: Deploy VitePress to Pages and Server
+
+
+        ####################back
+
+
+
+#         # 构建 VitePress 站点并将其部署到 GitHub Pages 的示例工作流程
+# name: Deploy VitePress site to Pages
+
 # on:
+#   # 在针对 `main` 分支的推送上运行。如果你
+#   # 使用 `master` 分支作为默认分支，请将其更改为 `master`
 #   push:
 #     branches: [main]
+
+#   # 允许你从 Actions 选项卡手动运行此工作流程
 #   workflow_dispatch:
 
+# # 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
 # permissions:
 #   contents: read
 #   pages: write
 #   id-token: write
 
+# # 只允许同时进行一次部署，跳过正在运行和最新队列之间的运行队列
+# # 但是，不要取消正在进行的运行，因为我们希望允许这些生产部署完成
 # concurrency:
 #   group: pages
 #   cancel-in-progress: false
 
 # jobs:
-#   build-and-deploy:
+#   # 构建工作
+#   build:
 #     runs-on: ubuntu-latest
 #     steps:
-#       # 1. 检出代码
 #       - name: Checkout
 #         uses: actions/checkout@v5
 #         with:
-#           fetch-depth: 0
-
-#       # 2. 设置 pnpm
-#       - uses: pnpm/action-setup@v4
+#           fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
+#       - uses: pnpm/action-setup@v4 # 如果使用 pnpm，请取消此区域注释
 #         with:
 #           version: 8.6.10
-
-#       # 3. 设置 Node
+#       # - uses: oven-sh/setup-bun@v1 # 如果使用 Bun，请取消注释
 #       - name: Setup Node
 #         uses: actions/setup-node@v6
 #         with:
 #           node-version: 24
-#           cache: pnpm
-
-#       # 4. 安装依赖
+#           cache: pnpm # 或 pnpm / yarn
+#       - name: Setup Pages
+#         uses: actions/configure-pages@v5
 #       - name: Install dependencies
-#         run: pnpm install
-
-#       # 5. 构建站点
+#         run: pnpm install # 或 pnpm install / yarn install / bun install
 #       - name: Build with VitePress
-#         run: pnpm docs:build
-
-#       # 9. 【新增】修复SSH密钥格式（如果需要）
-#       - name: Fix SSH Key Format
-#         run: |
-#           echo "=== 修复SSH密钥格式 ==="
-#           mkdir -p ~/.ssh
-          
-#           # 清理密钥中的换行符和空格
-#           CLEAN_KEY=$(echo "$SSH_PRIVATE_KEY" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
-#           echo "$CLEAN_KEY" > ~/.ssh/fixed_key
-#           chmod 600 ~/.ssh/fixed_key
-          
-#           # 验证修复后的密钥
-#           if ssh-keygen -l -f ~/.ssh/fixed_key >/dev/null 2>&1; then
-#             echo "✅ 修复后的SSH密钥格式正确"
-#             ssh-keygen -l -f ~/.ssh/fixed_key
-#             # 导出修复后的密钥供后续步骤使用
-#             echo "$CLEAN_KEY" > ~/.ssh/deploy_key
-#             chmod 600 ~/.ssh/deploy_key
-#           else
-#             echo "❌ 无法修复SSH密钥格式"
-#             echo "请检查GitHub Secrets中的SSH_PRIVATE_KEY格式"
-#             exit 1
-#           fi
-#           echo "=================="
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#           SSH_HOST: ${{ secrets.SSH_HOST }}
-#           SSH_USER: ${{ secrets.SSH_USER }}
-
-#       # 10. 【新增】使用修复后的密钥手动部署到远程服务器
-#       - name: Deploy to Remote Server
-#         run: |
-#           echo "=== 开始手动部署 ==="
-          
-#           # 使用修复后的密钥进行rsync部署
-#           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/fixed_key" \
-#             docs/.vitepress/dist/ \
-#             $SSH_USER@$SSH_HOST:/www/wwwroot/ryw_yun_project/wgg_project/
-          
-#           # 检查部署结果
-#           if [ $? -eq 0 ]; then
-#             echo "✅ 部署成功"
-#           else
-#             echo "❌ 部署失败"
-#             exit 1
-#           fi
-#           echo "=================="
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#           SSH_HOST: ${{ secrets.SSH_HOST }}
-#           SSH_USER: ${{ secrets.SSH_USER }}
-
-#       # 10. 【新增】调试：验证部署结果
-#       - name: Verify Deployment
-#         run: |
-#           echo "=== 验证部署结果 ==="
-#           mkdir -p ~/.ssh
-#           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-#           chmod 600 ~/.ssh/deploy_key
-#           ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
-          
-#           ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key $SSH_USER@$SSH_HOST "
-#             echo '远程目录内容:';
-#             ls -la $TARGET_DIR;
-#             echo '检查index.html:';
-#             ls -la $TARGET_DIR/index.html 2>/dev/null || echo 'index.html不存在';
-#             echo '检查文件数量:';
-#             find $TARGET_DIR -type f | wc -l;
-#           "
-#           echo "=================="
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#           SSH_HOST: ${{ secrets.SSH_HOST }}
-#           SSH_USER: ${{ secrets.SSH_USER }}
-#           TARGET_DIR: "/www/wwwroot/ryw_yun_project/wgg_project"
-
-#       # 7. 上传 artifact 供 GitHub Pages 部署使用
+#         run: pnpm docs:build # 或 pnpm docs:build / yarn docs:build / bun run docs:build
 #       - name: Upload artifact
 #         uses: actions/upload-pages-artifact@v3
 #         with:
 #           path: docs/.vitepress/dist
 
-#   # 部署到 GitHub Pages 任务 (依赖上面的 build 完成)
-#   deploy-github:
+#   # 部署工作
+#   deploy:
 #     environment:
 #       name: github-pages
 #       url: ${{ steps.deployment.outputs.page_url }}
-#     needs: build-and-deploy
+#     needs: build
 #     runs-on: ubuntu-latest
-#     name: Deploy to GitHub Pages
+#     name: Deploy
 #     steps:
 #       - name: Deploy to GitHub Pages
 #         id: deployment
