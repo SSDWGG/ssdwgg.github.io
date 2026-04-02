@@ -64,30 +64,30 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # 部署到 Cloudflare Pages 工作
-  deploy-cloudflare:
-    runs-on: ubuntu-latest
-    name: Deploy to Cloudflare Pages
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+  # 部署到 Cloudflare Pages 工作 （限制25M）
+  # deploy-cloudflare:
+  #   runs-on: ubuntu-latest
+  #   name: Deploy to Cloudflare Pages
+  #   needs: build
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5
       
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: docs/.vitepress/dist
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: github-pages
+  #         path: docs/.vitepress/dist
           
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: wgg-docs
-          directory: docs/.vitepress/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3.24.0'
+  #     - name: Deploy to Cloudflare Pages
+  #       uses: cloudflare/pages-action@v1
+  #       with:
+  #         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  #         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  #         projectName: wgg-docs
+  #         directory: docs/.vitepress/dist
+  #         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+  #         wranglerVersion: '3.24.0'
 
 #       # 9. 【新增】修复SSH密钥格式（如果需要）
 #       - name: Fix SSH Key Format
