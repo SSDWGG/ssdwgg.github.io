@@ -285,6 +285,20 @@ export default defineConfig({
         ],
       },
       {
+        text: 'AI',
+        items: [
+          {
+            text: '介绍',
+            collapsed: false,
+            items: [
+              { text: '前言', link: '/ai/preface' },
+              { text: '环境配置', link: '/ai/env' },
+              { text: 'openclaw', link: '/ai/openclaw' },
+            ],
+          },
+        ],
+      },
+      {
         text: '开发范式',
         collapsed: true,
         items: [
@@ -315,12 +329,12 @@ export default defineConfig({
         text: 'ERP 2026',
         collapsed: true,
         items: [
-          // { text: '项目配置', link: '/plan/env' },
+          { text: '项目配置', link: '/plan/env' },
           { text: '目标需求', link: '/plan/todo' },
-          // { text: '需求评估', link: '/plan/solution' },
-          // { text: '需求模块', link: '/plan/solution-part' },
-          // { text: 'ERP迭代记录', link: '/plan/iteration' },
-          // { text: '人员招聘', link: '/plan/recruitment' },
+          { text: '需求评估', link: '/plan/solution' },
+          { text: '需求模块', link: '/plan/solution-part' },
+          { text: 'ERP迭代记录', link: '/plan/iteration' },
+          { text: '人员招聘', link: '/plan/recruitment' },
         ],
       },
       {
