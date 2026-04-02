@@ -1,4 +1,4 @@
-# Artificial Intelligence 概念
+# Artificial Intelligence 概念1
 
 ## 人工智能 (AI)
 *   **定义:** AI 是计算机科学的一个分支，旨在模拟人类智能，使机器能够执行复杂任务，例如语音识别、图像分类和自动驾驶。
