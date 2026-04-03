@@ -10,6 +10,6 @@ WPD是一个基于vitepress文档的个性化文档模板
 
 ## 演示
 
-[预览访问地址:http://ssdwgg.site/](http://ssdwgg.site/)
+[预览访问地址:https://ssdwgg.site/](https://ssdwgg.site/)
 
 [预览访问地址:https://ssdwgg.github.io/](https://ssdwgg.github.io/)

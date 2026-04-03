@@ -15,7 +15,3 @@ pageClass: hiddenBszPage
 <confetti />
 
 <notice/>
-
-
-
-    
