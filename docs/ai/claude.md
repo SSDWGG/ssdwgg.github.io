@@ -1,6 +1,6 @@
 # Claude 与 Claude Code 介绍
 
-> 本文基于 Anthropic 官方产品页、帮助中心与 Claude Code 官方文档整理，分为两部分：先介绍 Claude，再介绍 Claude Code 的安装与使用方式。
+> 本文基于 Anthropic 官方产品页、帮助中心与 Claude Code 官方文档整理。分为三部分：Claude 产品介绍、Claude Code 安装与使用、以及中国区用户访问说明。
 
 ## 一、Claude 是什么
 
@@ -57,13 +57,63 @@ Anthropic 官方产品页明确提供桌面端下载入口，适合把 Claude �
 
 ## 四、Claude 的地区与可用性说明
 
-Anthropic 官方帮助中心维护了 Claude 的支持地区列表。是否能正常使用 Claude，不是只看你有没有账号，还要看你所在地区是否属于官方支持范围。
+Anthropic 官方帮助中心维护了 Claude 的支持地区列表。是否能正常使用 Claude，不仅取决于账号，还取决于所在地区是否在官方支持范围内。
 
-截至 `2026-04-22`，Anthropic 官方支持地区页面中给出了可访问 Claude 的国家和地区列表。中国大陆未出现在该支持列表中。
+截至 `2026-04-22`，中国大陆未出现在 Anthropic 官方支持地区列表中。
 
-这里我需要明确说明：这是我根据官方支持国家页面的公开列表做出的判断。
+## 五、中国区用户如何使用 Claude
 
-## 五、Claude Code 是什么
+中国大陆用户由于网络限制，直接访问 claude.ai 通常不可用。以下是目前可行的几种方式：
+
+### 方式一：通过 API 调用（推荐开发者）
+
+Anthropic 提供 API 访问，开发者可以通过 API Key 直接调用 Claude 模型，不依赖 claude.ai 网页端。
+
+1. 在 [console.anthropic.com](https://console.anthropic.com) 注册账号并获取 API Key
+2. 使用官方 SDK 或 HTTP 请求调用：
+
+```bash
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{"model":"claude-sonnet-4-6","max_tokens":1024,"messages":[{"role":"user","content":"Hello"}]}'
+```
+
+> API 端点 `api.anthropic.com` 的可访问性因网络环境而异，部分地区需要配置代理。
+
+### 方式二：通过第三方平台（无需科学上网）
+
+部分国内或国际平台已集成 Claude 模型，可直接使用：
+
+- **AWS Bedrock**：亚马逊云服务提供 Claude 模型接入，国内企业可通过 AWS 中国区或海外区使用
+- **Google Cloud Vertex AI**：同样提供 Claude 模型，适合已有 GCP 账号的用户
+- **国内 AI 平台**：部分国内平台（如字节跳动、百度等）提供类似能力的模型，可作为替代
+
+### 方式三：使用 Claude Code（需要网络可达）
+
+Claude Code 本质上是调用 Anthropic API，因此：
+
+- 需要有效的 Pro / Max / Team / Enterprise / Console 账号
+- 需要网络能够访问 `api.anthropic.com`
+- 可以通过设置 `ANTHROPIC_API_URL` 环境变量指向代理地址：
+
+```bash
+export ANTHROPIC_API_URL=https://your-proxy-endpoint
+claude
+```
+
+### 方式四：通过 OpenAI 兼容代理
+
+部分代理服务提供 OpenAI 兼容接口并转发至 Claude，可在支持自定义 Base URL 的客户端中使用。
+
+### 注意事项
+
+- 使用任何第三方代理或转发服务时，请注意数据隐私与安全风险
+- Anthropic 官方不对第三方代理的可用性或安全性负责
+- 企业用户建议优先考虑 AWS Bedrock 或 Vertex AI 等官方合作渠道
+
+## 六、Claude Code 是什么
 
 Claude Code 是 Anthropic 的 agentic coding tool，也就是偏 Agent 形态的编码工具。官方文档对它的描述很明确：它运行在终端里，帮助你更快把想法变成代码。
 
