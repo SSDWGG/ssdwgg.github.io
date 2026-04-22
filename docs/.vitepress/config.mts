@@ -302,6 +302,13 @@ export default defineConfig({
           },
         ],
       },
+      // {
+      //   text: '备忘录',
+      //   collapsed: true,
+      //   items: [
+      //     { text: '待输入', link: '/memo/' },
+      //   ],
+      // },
       {
         text: '开发范式',
         collapsed: true,
