@@ -17,12 +17,14 @@ let scene: THREE.Scene | undefined
 let camera: THREE.PerspectiveCamera | undefined
 let renderer: THREE.WebGLRenderer | undefined
 let control: OrbitControls | undefined
-let clock: THREE.Clock | undefined
+let timer: THREE.Timer | undefined
 let mixer: THREE.AnimationMixer | undefined
 let particlesGeometry: THREE.BufferGeometry | undefined
 const particleCount = 2000
 let listener: THREE.AudioListener | undefined
 let sound: THREE.PositionalAudio | undefined
+const christmasRoleBase = '/christmasRole'
+let removeAudioGestureListeners: (() => void) | undefined
 
 // 创建一个初始化函数
 const initScene = () => {
@@ -47,7 +49,10 @@ const initScene = () => {
   }
 
   // 人物动画定时器
-  clock = new THREE.Clock()
+  timer = new THREE.Timer()
+  if (typeof document !== 'undefined') {
+    timer.connect(document)
+  }
 
   // 1、创造粒子缓冲区几何体
   particlesGeometry = new THREE.BufferGeometry()
@@ -66,7 +71,7 @@ const initScene = () => {
   // 设置渲染器参数
   if (renderer) {
     renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.shadowMap.type = THREE.PCFShadowMap
     renderer.setSize(
       containerRef.value.clientWidth,
       containerRef.value.clientHeight,
@@ -155,7 +160,7 @@ function loadTreeModel() {
   if (!scene)
     return
   const loader = new GLTFLoader()
-  loader.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/models/tree3/scene.gltf', (gltf: any) => {
+  loader.load(`${christmasRoleBase}/models/tree3/scene.gltf`, (gltf: any) => {
     gltf.scene.scale.set(4, 4, 4)
     gltf.scene.position.set(-30, -1.2, 0)
     gltf.scene.castShadow = true
@@ -168,7 +173,7 @@ function loadShopModel() {
   if (!scene || !sound)
     return
   const loader = new GLTFLoader()
-  loader.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/models/shop/scene.gltf', (gltf: any) => {
+  loader.load(`${christmasRoleBase}/models/shop/scene.gltf`, (gltf: any) => {
     const modal = gltf.scene
     gltf.scene.scale.set(15, 15, 15)
     gltf.scene.position.set(40, 0, 0)
@@ -202,7 +207,7 @@ function createSnow() {
   const textureLoader = new THREE.TextureLoader()
   let texture: THREE.Texture | THREE.CanvasTexture
   try {
-    texture = textureLoader.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/public/sprite/snow2.png')
+    texture = textureLoader.load(`${christmasRoleBase}/public/sprite/snow2.png`)
   }
   catch (e) {
     console.warn('Failed to load snow texture, creating fallback')
@@ -272,7 +277,7 @@ function loadSnowfield() {
 
   let snowDisplacementMap: THREE.Texture | THREE.Color
   try {
-    snowDisplacementMap = snowTexture.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/public/texture/Snow2/snow_02_diff_4k.jpg')
+    snowDisplacementMap = snowTexture.load(`${christmasRoleBase}/public/texture/Snow2/snow_02_diff_4k.jpg`)
   }
   catch (e) {
     console.warn('Failed to load snow texture, using basic material')
@@ -281,7 +286,7 @@ function loadSnowfield() {
 
   let snowNormalMap: THREE.Texture | null = null
   try {
-    snowNormalMap = snowTexture.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/public/texture/Snow2/snow_02_nor_gl_4k.jpg')
+    snowNormalMap = snowTexture.load(`${christmasRoleBase}/public/texture/Snow2/snow_02_nor_gl_4k.jpg`)
   }
   catch (e) {
     snowNormalMap = null
@@ -289,7 +294,7 @@ function loadSnowfield() {
 
   let snowRoughnessMap: THREE.Texture | null = null
   try {
-    snowRoughnessMap = snowTexture.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/public/texture/Snow2/snow_02_rough_4k.jpg')
+    snowRoughnessMap = snowTexture.load(`${christmasRoleBase}/public/texture/Snow2/snow_02_rough_4k.jpg`)
   }
   catch (e) {
     snowRoughnessMap = null
@@ -378,7 +383,7 @@ function loadGirlModel() {
     return
   const loader = new GLTFLoader()
   let model: THREE.Group | null = null
-  loader.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/models/gltf/winterfest_bushranger_fortnite_skin.glb', (gltf: any) => {
+  loader.load(`${christmasRoleBase}/models/gltf/winterfest_bushranger_fortnite_skin.glb`, (gltf: any) => {
     model = gltf.scene
     const spotLight = createSpotLight()
     if (spotLight && model) {
@@ -401,10 +406,11 @@ function loadGirlModel() {
 }
 
 // 动画循环
-function animate() {
-  if (!clock || !renderer || !scene || !camera)
+function animate(timestamp?: number) {
+  if (!timer || !renderer || !scene || !camera)
     return
-  const delta = clock.getDelta()
+  timer.update(timestamp)
+  const delta = timer.getDelta()
   if (mixer) {
     mixer.update(delta)
   }
@@ -415,17 +421,70 @@ function animate() {
   renderer.render(scene, camera)
 }
 
+async function tryStartAudio() {
+  if (!listener || !sound || !sound.buffer)
+    return
+
+  const audioContext = listener.context
+
+  if (audioContext.state === 'suspended') {
+    try {
+      await audioContext.resume()
+    }
+    catch (error) {
+      console.warn('Failed to resume audio context:', error)
+      return
+    }
+  }
+
+  if (!sound.isPlaying) {
+    try {
+      sound.play()
+    }
+    catch (error) {
+      console.warn('Failed to start audio playback:', error)
+      return
+    }
+  }
+
+  if (removeAudioGestureListeners) {
+    removeAudioGestureListeners()
+    removeAudioGestureListeners = undefined
+  }
+}
+
+function setupAudioGestureListeners() {
+  if (typeof window === 'undefined' || removeAudioGestureListeners)
+    return
+
+  const events: Array<keyof WindowEventMap> = ['pointerdown', 'touchstart', 'keydown']
+  const handler = () => {
+    void tryStartAudio()
+  }
+
+  events.forEach(eventName =>
+    window.addEventListener(eventName, handler, { passive: true }),
+  )
+
+  removeAudioGestureListeners = () => {
+    events.forEach(eventName =>
+      window.removeEventListener(eventName, handler),
+    )
+  }
+}
+
 // 创建音频
 function createAudio() {
   if (!sound)
     return
+  setupAudioGestureListeners()
   const audioLoader = new THREE.AudioLoader()
-  audioLoader.load('https://icon-erp.oss-cn-hangzhou.aliyuncs.com/sPageChristmas/public/music/ddd.ogg', (buffer) => {
+  audioLoader.load(`${christmasRoleBase}/public/music/ddd.ogg`, (buffer) => {
     sound?.setBuffer(buffer)
     sound?.setLoop(true)
     sound?.setRefDistance(20)
     sound?.setVolume(0.5)
-    sound?.play()
+    void tryStartAudio()
   }, (xhr) => {
     console.log(`${(xhr.loaded / xhr.total * 100).toFixed(2)}% loaded`)
   }, (error) => {
@@ -435,6 +494,10 @@ function createAudio() {
 
 // 清理音频资源
 function disposeAudio() {
+  if (removeAudioGestureListeners) {
+    removeAudioGestureListeners()
+    removeAudioGestureListeners = undefined
+  }
   if (sound) {
     // 停止播放音频
     if (sound.isPlaying) {
@@ -505,8 +568,11 @@ onMounted(() => {
       control.dispose()
     }
 
-    // 销毁时钟
-    clock = undefined
+    // 销毁计时器
+    if (timer) {
+      timer.dispose()
+      timer = undefined
+    }
 
     // 销毁混合器
     if (mixer) {

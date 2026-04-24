@@ -39,6 +39,7 @@ import NewYear from './components/newYear/index.vue' // 新的一年
 import notice from "./components/notice.vue"
 import pageBubble from './components/pbg/pageBubble/index.vue'
 import googleAnalytics from 'vitepress-plugin-google-analytics'
+import WebsiteFrameFallback from './components/WebsiteFrameFallback.vue'
 
 // 彩虹背景动画样式
 let homePageStyle: HTMLStyleElement | undefined
@@ -69,6 +70,7 @@ export default {
     app.component('NewYear', NewYear)
     app.component('notice', notice)
     app.component('pageBubble', pageBubble)
+    app.component('WebsiteFrameFallback', WebsiteFrameFallback)
 
 
 

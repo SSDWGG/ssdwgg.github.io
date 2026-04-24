@@ -1,7 +1,10 @@
-# WGG Personal
+---
+layout: home
+footer: false
+pageClass: hiddenBszPage
+---
 
-This page is the English entry for the WGG personal page.
-
-## Chinese original
-
-For the Chinese page, see `/zh/wgg/personal`.
+<WebsiteFrameFallback
+  https-url="https://mywebsite.ssdwgg.site/"
+  http-url="http://mywebsite.ssdwgg.site/"
+/>

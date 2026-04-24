@@ -2,15 +2,12 @@
 layout: home
 footer: false
 pageClass: hiddenBszPage
-
 ---
 
-<iframe 
-  style="width:100%; height: 100vh;border: none;" 
-  src="https://mywebsite.ssdwgg.site/" 
+<WebsiteFrameFallback
+  https-url="https://mywebsite.ssdwgg.site/"
+  http-url="http://mywebsite.ssdwgg.site/"
 />
-
-
 
 <confetti />
 
