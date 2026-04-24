@@ -163,6 +163,7 @@ const enNav = [
   { text: 'Getting Started', link: '/en/getting-started' },
   { text: 'Configuration', link: '/en/configuration' },
   { text: 'Markdown', link: '/en/markdown' },
+  { text: 'Changelog', link: '/en/changelog' },
   { text: '中文站点', link: '/zh/' },
 ]
 
@@ -173,6 +174,7 @@ const enSidebar = [
       { text: 'Home', link: '/en/' },
       { text: 'Preface', link: '/en/preface' },
       { text: 'Getting Started', link: '/en/getting-started' },
+      { text: 'Changelog', link: '/en/changelog' },
       { text: 'Language Switch', link: '/en/multi-language' },
     ],
   },

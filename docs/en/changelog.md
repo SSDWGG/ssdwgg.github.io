@@ -1,13 +1,65 @@
+---
+sidebar: false
+outline: false
+editLink: false
+prev: false
+next: false
+---
+
 # Changelog
 
-This page is the English entry for project update notes.
+> [!IMPORTANT] About these notes
+>
+> This page is organized from the Git commit history and focuses on meaningful feature, documentation, deployment, and structural changes. Repeated test or deployment-debug commits are grouped together.
 
-## Focus
+> [!TIP]
+> Chinese version: `/zh/changelog`
 
-- release notes
-- major documentation updates
-- important structure changes
+::: timeline 2026-04-24
+- Reorganized the documentation into locale-based sections, added the `docs/en` English page set, and updated config plus permalink handling.
+- Improved local assets and fallback behavior for the Christmas role module, including models, textures, audio, and related static resources.
+- Synced bilingual personal pages so locale switching works cleanly.
+:::
 
-## Chinese original
+::: timeline 2026-04-23
+- Cleared temporary memo content to prepare for a cleaner task and note structure.
+:::
 
-For the detailed Chinese version, see `/zh/changelog`.
+::: timeline 2026-04-22
+- Expanded the AI documentation area with guides for `Codex`, `Claude`, `OpenClaw`, environment setup, and China access notes.
+- Improved the `README` and memo section, and continued refining task notes.
+- Updated planning and TODO pages to make the AI-related docs more complete.
+:::
+
+::: timeline 2026-04-02 ~ 2026-04-03
+- Iterated on the GitHub Actions deployment flow and refined auto-deploy details.
+- Updated public site addresses and personal page content.
+- Added and reorganized core AI documentation pages and related config.
+:::
+
+::: timeline 2026-03-13 ~ 2026-03-14
+- Added social links and a `Buy Me a Coffee` page with payment QR codes and landing assets.
+- Reworked `deploy.yml` several times to verify GitHub Pages and other deployment targets.
+- Updated site addresses, logo assets, and several showcase pages.
+:::
+
+::: timeline 2026-03-12
+- Expanded the homepage and docs with the WeChat external page, Thursday content, and interactive showcase pages such as `Hextris`.
+- Added Google Analytics experiments and improved layout, background, and theme component capabilities.
+- Fixed theme import issues, build warnings, deployment problems, and dependency setup.
+:::
+
+::: timeline 2026-03-09
+- Initialized the `VitePress`-based blog and documentation template with custom theme components and core site content.
+- Added interactive demo pages, including the Christmas tree and `Hextris`.
+- Adjusted search form spacing, global styles, and automated deployment setup.
+:::
+
+::: timeline 2024-01 ~ 2024-04
+- Continued maintaining the earlier site content and refreshed the `README` before the current documentation structure took shape.
+:::
+
+::: timeline 2021-09 ~ 2023-06
+- The repository started as a collection of static pages and personal homepage experiments.
+- Early history includes many upload, delete, and temporary adjustment commits, so this section stays intentionally high level.
+:::

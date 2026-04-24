@@ -77,6 +77,13 @@ pnpm docs:preview
 }
 ```
 
+## 推送前约定
+
+- 每次推送前需同步更新中英文变更记录：
+  - `docs/zh/changelog.md`
+  - `docs/en/changelog.md`
+- 仓库已提供 `.githooks/pre-push` 校验；若本地启用了 `core.hooksPath`，未更新变更记录时会阻止推送。
+
 ## 目录结构
 
 ```text

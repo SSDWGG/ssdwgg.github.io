@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+set -eu
+
+required_files="docs/zh/changelog.md docs/en/changelog.md"
+
+upstream_ref="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || true)"
+
+if [ -z "$upstream_ref" ]; then
+  echo "pre-push: no upstream branch configured, skip changelog check."
+  exit 0
+fi
+
+if ! git rev-parse --verify "$upstream_ref" >/dev/null 2>&1; then
+  echo "pre-push: upstream ref '$upstream_ref' not found locally, skip changelog check."
+  exit 0
+fi
+
+outgoing_range="$upstream_ref..HEAD"
+
+if [ -z "$(git rev-list "$outgoing_range" 2>/dev/null)" ]; then
+  exit 0
+fi
+
+changed_files="$(git diff --name-only "$outgoing_range")"
+missing_files=""
+
+for file in $required_files; do
+  if ! printf '%s\n' "$changed_files" | grep -Fx "$file" >/dev/null 2>&1; then
+    missing_files="$missing_files $file"
+  fi
+done
+
+if [ -n "$missing_files" ]; then
+  echo "✗ Push blocked: update both changelog pages before pushing."
+  echo "  Missing in outgoing commits:"
+  for file in $missing_files; do
+    echo "  - $file"
+  done
+  echo "  Then commit the changelog update and push again."
+  exit 1
+fi
+
+exit 0
