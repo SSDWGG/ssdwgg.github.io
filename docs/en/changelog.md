@@ -16,6 +16,8 @@ next: false
 > Chinese version: `/zh/changelog`
 
 ::: timeline 2026-04-24
+- Expanded the Chinese `Technical Tools` module with OpenCV, Three.js, Vue2, Vue3, and React guides covering usage and core principles.
+- Added a new Chinese `Technical Tools` top-level module with Docker, Nginx, and ECS introduction and usage guides.
 - Reorganized the documentation into locale-based sections, added the `docs/en` English page set, and updated config plus permalink handling.
 - Improved local assets and fallback behavior for the Christmas role module, including models, textures, audio, and related static resources.
 - Synced bilingual personal pages so locale switching works cleanly.

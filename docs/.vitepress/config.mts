@@ -110,6 +110,20 @@ const zhSidebar = [
     ],
   },
   {
+    text: '技术工具',
+    collapsed: true,
+    items: [
+      { text: 'Docker', link: '/tech-tools/docker' },
+      { text: 'Nginx', link: '/tech-tools/nginx' },
+      { text: 'ECS', link: '/tech-tools/ecs' },
+      { text: 'OpenCV', link: '/tech-tools/opencv' },
+      { text: 'Three.js', link: '/tech-tools/threejs' },
+      { text: 'Vue2', link: '/tech-tools/vue2' },
+      { text: 'Vue3', link: '/tech-tools/vue3' },
+      { text: 'React', link: '/tech-tools/react' },
+    ],
+  },
+  {
     text: '电子书籍',
     collapsed: true,
     items: [
