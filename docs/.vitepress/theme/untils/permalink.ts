@@ -44,6 +44,7 @@ const extractTitleFromContent = (content: string): string => {
 export const usePosts = async ({
   srcDir = 'permalink', // 默认源目录为'permalink'
   baseDir = 'docs', // 默认基础目录为'docs'
+  permalinkBase = `/${srcDir}`, // 默认永久链接前缀
 } = {}) => {
   const rewrites = {} // 初始化重写规则对象
 
@@ -71,7 +72,16 @@ export const usePosts = async ({
 
         // 生成或使用现有的permalink
         if (!data.permalink) {
-          data.permalink = `/${srcDir}/${generateString(6)}`
+          data.permalink = `${permalinkBase}/${generateString(6)}`.replace(/\/+/g, '/')
+        }
+        else if (
+          typeof data.permalink === 'string'
+          && srcDir.includes('/')
+          && !data.permalink.startsWith(`${permalinkBase}/`)
+        ) {
+          const slug = data.permalink.split('/').filter(Boolean).pop()
+          if (slug)
+            data.permalink = `${permalinkBase}/${slug}`.replace(/\/+/g, '/')
         }
 
         // 存储到映射中

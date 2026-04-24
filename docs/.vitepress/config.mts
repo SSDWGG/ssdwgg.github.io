@@ -9,11 +9,246 @@ import { generateSidebar } from 'vitepress-sidebar';
 
 import { usePosts } from './theme/untils/permalink'
 
-const { rewrites } = await usePosts()
+const { rewrites } = await usePosts({
+  srcDir: 'zh/permalink',
+  permalinkBase: '/zh/permalink',
+})
 
 const vitepressSidebarOptions = {
   /* Options... */
 };
+
+const prefixLocaleLink = (link: string, localeBase: string) => {
+  if (!link.startsWith('/'))
+    return link
+  if (link === '/')
+    return `${localeBase}/`
+  return `${localeBase}${link}`
+}
+
+const prefixLocaleItems = (items: any[], localeBase: string): any[] =>
+  items.map(item => ({
+    ...item,
+    ...(item.link ? { link: prefixLocaleLink(item.link, localeBase) } : {}),
+    ...(item.items ? { items: prefixLocaleItems(item.items, localeBase) } : {}),
+  }))
+
+const zhNav = [
+  { text: '首页', link: '/' },
+  { text: 'WGG🍉', link: '/wgg/personal' },
+  { text: '导航', link: '/wgg/project' },
+  { text: '更新日志', link: '/changelog' },
+]
+
+const zhSidebar = [
+  {
+    text: '📚vitepress文档简介',
+    collapsed: true,
+    items: [
+      {
+        text: '介绍',
+        collapsed: false,
+        items: [
+          { text: '前言', link: '/preface' },
+        ],
+      },
+      {
+        text: '基础配置',
+        collapsed: false,
+        items: [
+          { text: '快速上手', link: '/getting-started' },
+          { text: '配置', link: '/configuration' },
+          { text: '页面', link: '/page' },
+          { text: 'Frontmatter', link: '/frontmatter' },
+        ],
+      },
+      {
+        text: '进阶玩法',
+        collapsed: false,
+        items: [
+          { text: 'Markdown', link: '/markdown' },
+          { text: '团队', link: '/team' },
+          { text: '多语言', link: '/multi-language' },
+          { text: 'DocSearch', link: '/docsearch' },
+          { text: '静态部署', link: '/assets' },
+          { text: '样式美化', link: '/style' },
+          { text: '组件', link: '/components' },
+          { text: '布局插槽', link: '/layout' },
+          { text: '插件', link: '/plugin' },
+          { text: '更新及卸载', link: '/update' },
+          { text: '搭建导航', link: '/nav/' },
+          { text: '永久链接', link: '/permalink/' },
+        ],
+      },
+    ],
+  },
+  {
+    text: 'AI',
+    items: [
+      {
+        text: '介绍',
+        collapsed: false,
+        items: [
+          { text: '前言', link: '/ai/preface' },
+          { text: '环境配置', link: '/ai/env' },
+          { text: 'openclaw', link: '/ai/openclaw' },
+          { text: 'hermes', link: '/ai/hermes' },
+          { text: 'codex', link: '/ai/codex' },
+          { text: 'claude', link: '/ai/claude' },
+          { text: '国内访问说明', link: '/ai/china-access' },
+        ],
+      },
+    ],
+  },
+  {
+    text: '开发范式',
+    collapsed: true,
+    items: [
+      { text: '开发模式', link: '/development/type' },
+      { text: 'Vibe coding', link: '/development/ai' },
+      { text: '版本控制', link: '/development/git' },
+    ],
+  },
+  {
+    text: '简单算法',
+    collapsed: true,
+    items: [
+      { text: '排序', link: '/frontEnd/algorithm' },
+    ],
+  },
+  {
+    text: '电子书籍',
+    collapsed: true,
+    items: [
+      { text: 'JS高级程序设计', link: '/frontEnd/book/advancedProgramming' },
+      { text: '面试宝典', link: '/frontEnd/book/interview' },
+      { text: 'css揭秘', link: '/frontEnd/book/css' },
+      { text: '代码整洁之道', link: '/frontEnd/book/code' },
+      { text: '算法详解', link: '/frontEnd/book/algorithm' },
+    ],
+  },
+  {
+    text: 'ERP 2026',
+    collapsed: true,
+    items: [
+      { text: '项目配置', link: '/plan/env' },
+      { text: '目标需求', link: '/plan/todo' },
+      { text: '需求评估', link: '/plan/solution' },
+      { text: '需求模块', link: '/plan/solution-part' },
+      { text: 'ERP迭代记录', link: '/plan/iteration' },
+      { text: '人员招聘', link: '/plan/recruitment' },
+    ],
+  },
+  {
+    text: '其他文档',
+    collapsed: true,
+    items: [
+      { text: '单向同步windows', link: '/other/sync-win' },
+      { text: '单向同步mac', link: '/other/sync-mac' },
+      { text: 'svga资源', link: '/other/svga' },
+      { text: 'IKUN', link: '/other/ikun' },
+      { text: 'XLGX', link: '/other/xlgx' },
+      { text: 'Thursday', link: '/other/Thursday' },
+      { text: '圣诞节树', link: '/other/christmas-tree' },
+      { text: '圣诞人', link: '/other/christmas-role' },
+      { text: 'splineRole', link: '/other/splineRole' },
+      { text: '新年', link: '/other/newYear' },
+      { text: 'hextris', link: '/other/hextris' },
+    ],
+  },
+]
+
+const enNav = [
+  { text: 'Home', link: '/en/' },
+  { text: 'Getting Started', link: '/en/getting-started' },
+  { text: 'Configuration', link: '/en/configuration' },
+  { text: 'Markdown', link: '/en/markdown' },
+  { text: '中文站点', link: '/zh/' },
+]
+
+const enSidebar = [
+  {
+    text: 'Introduction',
+    items: [
+      { text: 'Home', link: '/en/' },
+      { text: 'Preface', link: '/en/preface' },
+      { text: 'Getting Started', link: '/en/getting-started' },
+      { text: 'Language Switch', link: '/en/multi-language' },
+    ],
+  },
+  {
+    text: 'Core Setup',
+    items: [
+      { text: 'Configuration', link: '/en/configuration' },
+      { text: 'Page Config', link: '/en/page' },
+      { text: 'Frontmatter', link: '/en/frontmatter' },
+      { text: 'Markdown', link: '/en/markdown' },
+      { text: 'Assets', link: '/en/assets' },
+      { text: 'DocSearch', link: '/en/docsearch' },
+    ],
+  },
+  {
+    text: 'Advanced',
+    items: [
+      { text: 'Team', link: '/en/team' },
+      { text: 'Components', link: '/en/components' },
+      { text: 'Layout Slots', link: '/en/layout' },
+      { text: 'Plugins', link: '/en/plugin' },
+      { text: 'Styles', link: '/en/style' },
+      { text: 'Fluid Border Style', link: '/en/style-fluidborder' },
+      { text: 'Update & Uninstall', link: '/en/update' },
+      { text: 'Navigation Site', link: '/en/nav/' },
+      { text: 'Permalinks', link: '/en/permalink/' },
+    ],
+  },
+  {
+    text: 'AI',
+    items: [
+      { text: 'Overview', link: '/en/ai/preface' },
+      { text: 'Environment Setup', link: '/en/ai/env' },
+      { text: 'OpenClaw', link: '/en/ai/openclaw' },
+      { text: 'Hermes', link: '/en/ai/hermes' },
+      { text: 'Codex', link: '/en/ai/codex' },
+      { text: 'Claude', link: '/en/ai/claude' },
+      { text: 'China Access Notes', link: '/en/ai/china-access' },
+    ],
+  },
+  {
+    text: 'Development',
+    items: [
+      { text: 'Development Modes', link: '/en/development/type' },
+      { text: 'AI-assisted Development', link: '/en/development/ai' },
+      { text: 'Git Workflow', link: '/en/development/git' },
+    ],
+  },
+  {
+    text: 'Planning',
+    items: [
+      { text: 'Project Config', link: '/en/plan/env' },
+      { text: 'ERP 2026 Requirements', link: '/en/plan/todo' },
+      { text: 'Requirement Evaluation', link: '/en/plan/solution' },
+      { text: 'Module Breakdown', link: '/en/plan/solution-part' },
+      { text: 'Iteration Log', link: '/en/plan/iteration' },
+      { text: 'Hiring', link: '/en/plan/recruitment' },
+    ],
+  },
+  {
+    text: 'Other',
+    items: [
+      { text: 'Sync to Windows', link: '/en/other/sync-win' },
+      { text: 'Sync to Mac', link: '/en/other/sync-mac' },
+      { text: 'SVGA Resources', link: '/en/other/svga' },
+      { text: 'IKUN', link: '/en/other/ikun' },
+      { text: 'XLGX', link: '/en/other/xlgx' },
+      { text: 'Thursday', link: '/en/other/Thursday' },
+      { text: 'Christmas Tree', link: '/en/other/christmas-tree' },
+      { text: 'Christmas Role', link: '/en/other/christmas-role' },
+      { text: 'Spline Role', link: '/en/other/splineRole' },
+      { text: 'New Year', link: '/en/other/newYear' },
+      { text: 'Hextris', link: '/en/other/hextris' },
+    ],
+  },
+]
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -40,15 +275,80 @@ export default defineConfig({
 
   // 多语言
   locales: {
-    root: {
+    zh: {
       label: '简体中文',
-      lang: 'Zh_CN',
+      lang: 'zh-CN',
+      link: '/zh/',
+      title: 'WPD',
+      description: 'WGG’s personal docs',
+      themeConfig: {
+        nav: prefixLocaleItems(zhNav, '/zh'),
+        sidebar: prefixLocaleItems(zhSidebar, '/zh'),
+        editLink: {
+          pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path',
+          text: '在 GitHub 编辑此页',
+        },
+        lastUpdated: {
+          text: '上次更新时间',
+          formatOptions: {
+            dateStyle: 'short',
+            timeStyle: 'medium',
+          },
+        },
+        darkModeSwitchLabel: '深浅模式',
+        footer: {
+          message: 'Released under the MIT License.',
+          copyright: `Copyright © 2023-${new Date().getFullYear()} <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a> 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">浙 ICP备2021009489号-2</a>`,
+        },
+        sidebarMenuLabel: '目录',
+        returnToTopLabel: '返回顶部',
+        outline: {
+          level: [2, 3],
+          label: '当前页大纲',
+        },
+        docFooter: {
+          prev: '上一页',
+          next: '下一页',
+        },
+      },
     },
-    // en: {
-    //   label: 'English',
-    //   lang: 'en',
-    //   link: '/en/',
-    // },
+    en: {
+      label: 'English',
+      lang: 'en-US',
+      link: '/en/',
+      title: 'WPD',
+      description: 'WGG personal docs',
+      themeConfig: {
+        nav: enNav,
+        sidebar: enSidebar,
+        editLink: {
+          pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path',
+          text: 'Edit this page on GitHub',
+        },
+        lastUpdated: {
+          text: 'Last updated',
+          formatOptions: {
+            dateStyle: 'short',
+            timeStyle: 'medium',
+          },
+        },
+        darkModeSwitchLabel: 'Appearance',
+        footer: {
+          message: 'Released under the MIT License.',
+          copyright: `Copyright © 2023-${new Date().getFullYear()} <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a>`,
+        },
+        sidebarMenuLabel: 'Menu',
+        returnToTopLabel: 'Back to top',
+        outline: {
+          level: [2, 3],
+          label: 'On this page',
+        },
+        docFooter: {
+          prev: 'Previous page',
+          next: 'Next page',
+        },
+      },
+    },
     // fr: {
     //   label: 'French',
     //   lang: 'fr',
@@ -92,8 +392,9 @@ export default defineConfig({
         const defaultRender = md.render
         md.render = (...args) => {
           const [content, env] = args
-          const currentLang = env?.localeIndex || 'root'
-          const isHomePage = env?.path === '/' || env?.relativePath === 'index.md' // 判断是否是首页
+          const currentLang = env?.localeIndex || 'zh'
+          const isHomePage = ['/', '/zh/', '/en/'].includes(env?.path)
+            || ['index.md', 'zh/index.md', 'en/index.md'].includes(env?.relativePath) // 判断是否是首页
 
           if (isHomePage) {
             return defaultRender.apply(md, args) // 如果是首页，直接渲染内容
@@ -101,7 +402,7 @@ export default defineConfig({
           // 调用原始渲染
           let defaultContent = defaultRender.apply(md, args)
           // 替换内容
-          if (currentLang === 'root') {
+          if (currentLang === 'zh') {
             defaultContent = defaultContent.replace(/NOTE/g, '提醒')
               .replace(/TIP/g, '建议')
               .replace(/IMPORTANT/g, '重要')
@@ -216,157 +517,11 @@ export default defineConfig({
     // 设置站点标题 会覆盖title
     // siteTitle: 'Hello World',
 
-    // 编辑本页
-    editLink: {
-      pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path', // 改成自己的仓库
-      text: '在Github编辑本页',
-    },
-
-    // 上次更新时间
-    lastUpdated: {
-      text: '上次更新时间',
-      formatOptions: {
-        dateStyle: 'short', // 可选值full、long、medium、short
-        timeStyle: 'medium', // 可选值full、long、medium、short
-      },
-    },
     // 导航栏
-    nav: [
-      { text: '首页', link: '/' },
-      { text: 'WGG🍉', link: '/wgg/personal' },
-      { text: `导航`, link: '/wgg/project' },
-      { text: '更新日志', link: '/changelog' },
-    ],
+    nav: [],
 
     // 侧边栏
-    sidebar: [
-     {
-        text: '📚vitepress文档简介',
-        collapsed: true,
-        items: [
-          {
-            // 分组标题1
-            text: '介绍',
-            collapsed: false,
-            items: [
-              { text: '前言', link: '/preface' },
-            ],
-          },
-          {
-            // 分组标题2
-            text: '基础配置',
-            collapsed: false,
-            items: [
-              { text: '快速上手', link: '/getting-started' },
-              { text: '配置', link: '/configuration' },
-              { text: '页面', link: '/page' },
-              { text: 'Frontmatter', link: '/frontmatter' },
-            ],
-          },
-          {
-            // 分组标题3
-            text: '进阶玩法',
-            collapsed: false,
-            items: [
-              { text: 'Markdown', link: '/markdown' },
-              { text: '团队', link: '/team' },
-              { text: '多语言', link: '/multi-language' },
-              { text: 'DocSearch', link: '/docsearch' },
-              { text: '静态部署', link: '/assets' },
-              { text: '样式美化', link: '/style' },
-              { text: '组件', link: '/components' },
-              { text: '布局插槽', link: '/layout' },
-              { text: '插件', link: '/plugin' },
-              { text: '更新及卸载', link: '/update' },
-              { text: '搭建导航', link: '/nav/' },
-              { text: '永久链接', link: '/permalink/' },
-            ],
-          },
-        ],
-      },
-      {
-        text: 'AI',
-        items: [
-          {
-            text: '介绍',
-            collapsed: false,
-            items: [
-              { text: '前言', link: '/ai/preface' },
-              { text: '环境配置', link: '/ai/env' },
-              { text: 'openclaw', link: '/ai/openclaw' },
-              { text: 'hermes', link: '/ai/hermes' },
-              { text: 'codex', link: '/ai/codex' },
-              { text: 'claude', link: '/ai/claude' },
-              { text: '国内访问说明', link: '/ai/china-access' },
-            ],
-          },
-        ],
-      },
-      // {
-      //   text: '备忘录',
-      //   collapsed: true,
-      //   items: [
-      //     { text: '待输入', link: '/memo/' },
-      //   ],
-      // },
-      {
-        text: '开发范式',
-        collapsed: true,
-        items: [
-          { text: '开发模式', link: '/development/type' },
-          { text: 'Vibe coding', link: '/development/ai' },
-          { text: '版本控制', link: '/development/git' },
-        ],
-      },
-      {
-        text: '简单算法',
-        collapsed: true,
-        items: [
-          { text: '排序', link: '/frontEnd/algorithm' },
-        ],
-      },
-      {
-        text: '电子书籍',
-        collapsed: true,
-        items: [
-          { text: 'JS高级程序设计', link: '/frontEnd/book/advancedProgramming' },
-          { text: '面试宝典', link: '/frontEnd/book/interview' },
-          { text: 'css揭秘', link: '/frontEnd/book/css' },
-          { text: '代码整洁之道', link: '/frontEnd/book/code' },
-          { text: '算法详解', link: '/frontEnd/book/algorithm' },
-        ],
-      },
-      {
-        text: 'ERP 2026',
-        collapsed: true,
-        items: [
-          { text: '项目配置', link: '/plan/env' },
-          { text: '目标需求', link: '/plan/todo' },
-          { text: '需求评估', link: '/plan/solution' },
-          { text: '需求模块', link: '/plan/solution-part' },
-          { text: 'ERP迭代记录', link: '/plan/iteration' },
-          { text: '人员招聘', link: '/plan/recruitment' },
-        ],
-      },
-      {
-        text: '其他文档',
-        collapsed: true,
-        items: [
-          { text: '单向同步windows', link: '/other/sync-win' },
-          { text: '单向同步mac', link: '/other/sync-mac' },
-          { text: 'svga资源', link: '/other/svga' },
-          { text: 'IKUN', link: '/other/ikun' },
-          { text: 'XLGX', link: '/other/xlgx' },
-          { text: 'Thursday', link: '/other/Thursday' },
-          { text: '圣诞节树', link: '/other/christmas-tree' },
-          { text: '圣诞人', link: '/other/christmas-role' },
-          { text: 'splineRole', link: '/other/splineRole' },
-          { text: '新年', link: '/other/newYear' },
-          { text: 'hextris', link: '/other/hextris' },
-
-        ],
-      },
-    ],
+    sidebar: [],
     // sidebar: generateSidebar({
     //   /*
     //    * For detailed instructions, see the links below:
@@ -433,6 +588,22 @@ export default defineConfig({
               },
             },
           },
+          en: {
+            translations: {
+              button: {
+                buttonText: 'Search Docs',
+                buttonAriaLabel: 'Search Docs'
+              },
+              modal: {
+                noResultsText: 'No results found',
+                resetButtonTitle: 'Clear search',
+                footer: {
+                  selectText: 'Select',
+                  navigateText: 'Navigate'
+                },
+              },
+            },
+          },
         },
       },      // provider: 'algolia',
       // options: {
@@ -493,7 +664,7 @@ export default defineConfig({
         icon: {
           svg: '<svg t="1773385389751" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9862" width="48" height="48"><path d="M183.515429 492.495238v67.657143l87.161904 0.024381 150.869334 55.734857h159.744a37.010286 37.010286 0 0 1 0 74.020571h-135.216762a12.361143 12.361143 0 0 0 0 24.697905h156.086857c10.630095 0 21.138286-2.267429 30.817524-6.704762l190.634666-87.064381a64.26819 64.26819 0 0 1 84.016762 29.354667 61.293714 61.293714 0 0 1-27.233524 82.578286L519.509333 913.310476a123.66019 123.66019 0 0 1-96.475428 6.022095l-197.388191-69.680761H183.515429v62.464H109.714286V492.495238h73.801143zM527.969524 97.52381C704.609524 97.52381 847.823238 241.200762 847.823238 418.425905c0 56.417524-14.506667 109.470476-40.009143 155.526095l-4.486095 1.926095-137.020952 62.585905-0.780191-4.071619a86.186667 86.186667 0 0 0-84.114286-67.852191l-151.161904-0.02438-150.796191-55.710477H232.71619v-67.705904h-23.649523a326.460952 326.460952 0 0 1-0.926477-24.673524C208.14019 241.176381 351.329524 97.52381 527.969524 97.52381z m30.963809 121.904761h-73.142857l-0.048762 28.476953a80.457143 80.457143 0 0 0-20.723809 11.385905c-16.335238 12.55619-24.502857 30.061714-24.502857 52.49219 0 11.995429 1.926095 22.381714 5.753904 31.158857 3.82781 8.777143 9.728 16.579048 17.676191 23.332572 7.94819 6.777905 19.846095 13.799619 35.742476 21.016381 17.554286 7.875048 28.355048 13.116952 32.426667 15.652571 4.047238 2.56 6.997333 5.095619 8.825904 7.582476a14.384762 14.384762 0 0 1 2.755048 8.777143 15.62819 15.62819 0 0 1-6.826667 13.068191c-4.559238 3.388952-11.727238 5.071238-21.504 5.071238-11.337143 0-23.79581-1.80419-37.351619-5.412572a195.632762 195.632762 0 0 1-31.573333-11.385905L438.857143 416.963048v58.660571c11.897905 5.656381 23.332571 9.630476 34.328381 11.922286 3.85219 0.78019 8.045714 1.462857 12.55619 1.950476l0.048762 22.503619h73.142857v-28.379429a96.792381 96.792381 0 0 0 5.924572-2.438095c14.433524-6.485333 25.502476-15.60381 33.158095-27.306666 7.68-11.727238 11.50781-25.136762 11.50781-40.252953 0-16.457143-4.071619-30.086095-12.239239-40.911238-8.167619-10.849524-22.77181-20.967619-43.763809-30.427429-21.894095-9.99619-35.303619-16.896-40.228572-20.675047-4.973714-3.779048-7.43619-8.045714-7.43619-12.824381 0-4.437333 1.950476-8.167619 5.851429-11.166476 3.876571-2.998857 10.093714-4.510476 18.651428-4.510476 14.726095 0 31.890286 4.144762 51.516953 12.385523l7.484952 3.291429L609.52381 257.950476a202.849524 202.849524 0 0 0-50.614858-15.36V219.428571z" p-id="9863" fill="#d0a0eb"></path></svg>',
         },
-        link: '/buymecoffee',
+        link: '/zh/buymecoffee',
         ariaLabel: 'BuyMeCoffee',
       },
       {
@@ -514,38 +685,10 @@ export default defineConfig({
         icon: {
           svg: '<svg t="1773385295733" class="icon" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6053" width="48" height="48"><path d="M1024.16 694.816c0-149.92-143.104-271.392-319.584-271.392-176.576 0-319.68 121.504-319.68 271.392S528 966.208 704.576 966.208c55.456 0 107.648-12.096 153.184-33.248l125.984 54.528-14.592-140.544c34.784-43.392 55.04-95.808 55.04-152.128zM596.832 621.28c-25.152 0-45.472-20.352-45.472-45.472s20.32-45.472 45.472-45.472c25.12 0 45.44 20.384 45.44 45.472s-20.384 45.472-45.44 45.472z m215.392 0c-25.056 0-45.44-20.352-45.44-45.472s20.384-45.472 45.44-45.472c25.184 0 45.536 20.384 45.536 45.472s-20.352 45.472-45.536 45.472zM704.576 387.488c49.376 0 96.416 8.8 139.264 24.64 0.32-5.728 0.992-11.232 0.992-16.992 0-198.08-189.152-358.624-422.432-358.624C189.184 36.512 0.032 197.024 0.032 395.136c0 74.496 26.816 143.776 72.704 201.12L53.472 781.92l166.432-72.096c41.216 19.2 86.784 32.16 134.88 38.784-3.616-17.504-5.824-35.424-5.824-53.792 0.032-169.44 159.552-307.296 355.616-307.296z m-139.808-209.6c33.184 0 60 26.88 60 60 0 33.184-26.816 60.064-60 60.064s-60.032-26.88-60.032-60.064c0-33.152 26.88-60 60.032-60zM280.032 297.952c-33.184 0-60-26.88-60-60.064 0-33.152 26.848-60 60-60 33.184 0 60.032 26.88 60.032 60s-26.88 60.064-60.032 60.064z" fill="#51C332" p-id="6054"></path></svg>',
         },
-        link: '/wechatLink',
+        link: '/zh/wechatLink',
         ariaLabel: 'wechat',
       },
     ],
-
-    // 手机端深浅模式文字修改
-    darkModeSwitchLabel: '深浅模式',
-
-    // 页脚
-    footer: {
-      message: 'Released under the MIT License.',
-      copyright: `Copyright © 2023-${new Date().getFullYear()} <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a> 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">浙 ICP备2021009489号-2</a>`,
-    },
-
-    // 侧边栏文字更改(移动端)
-    sidebarMenuLabel: '目录',
-
-    // 返回顶部文字修改(移动端)
-    returnToTopLabel: '返回顶部',
-
-    // 大纲显示2-3级标题
-    outline: {
-      level: [2, 3],
-      label: '当前页大纲',
-    },
-
-    // 自定义上下页名
-    docFooter: {
-      prev: '上一页',
-      next: '下一页',
-    },
-
   },
 
 })

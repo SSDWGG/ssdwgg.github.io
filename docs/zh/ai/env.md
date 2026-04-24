@@ -54,11 +54,11 @@
 
 如果你想继续深入看具体工具，可以继续阅读：
 
-- [OpenClaw 介绍页](/ai/openclaw)
-- [Hermes 介绍页](/ai/hermes)
-- [Codex 介绍页](/ai/codex)
-- [Claude / Claude Code 介绍页](/ai/claude)
-- [国内访问与合规说明](/ai/china-access)
+- [OpenClaw 介绍页](/zh/ai/openclaw)
+- [Hermes 介绍页](/zh/ai/hermes)
+- [Codex 介绍页](/zh/ai/codex)
+- [Claude / Claude Code 介绍页](/zh/ai/claude)
+- [国内访问与合规说明](/zh/ai/china-access)
 
 ## 核心工具说明
 
@@ -176,7 +176,7 @@ OpenClaw 是自托管的 AI Gateway / 数字助理，重点不在“跑模型”
 
 更完整内容请看：
 
-- [OpenClaw 介绍页](/ai/openclaw)
+- [OpenClaw 介绍页](/zh/ai/openclaw)
 
 ### Hermes Agent
 
@@ -191,7 +191,7 @@ Hermes Agent 是 Nous Research 推出的开源 AI Agent，强调长期使用中�
 
 更完整内容请看：
 
-- [Hermes 介绍页](/ai/hermes)
+- [Hermes 介绍页](/zh/ai/hermes)
 
 ### Codex
 
@@ -206,7 +206,7 @@ Codex 是 OpenAI 的 coding agent，适合把“理解代码、改代码、执�
 
 更完整内容请看：
 
-- [Codex 介绍页](/ai/codex)
+- [Codex 介绍页](/zh/ai/codex)
 
 ### Claude / Claude Code
 
@@ -221,7 +221,7 @@ Claude 是通用型 AI 助手，而 Claude Code 是 Anthropic 面向终端开发
 
 更完整内容请看：
 
-- [Claude / Claude Code 介绍页](/ai/claude)
+- [Claude / Claude Code 介绍页](/zh/ai/claude)
 
 ## 如何做环境选择
 

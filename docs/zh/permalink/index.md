@@ -434,7 +434,6 @@ next:
 
 ```
 
-- 本地访问：`http://localhost:5173/permalink/3dc2b3`
+- 本地访问：`http://localhost:5173/zh/permalink/3dc2b3`
 
-- 永久链接：`https://vitepress.yiov.top/permalink/3dc2b3`
-
+- 永久链接：`https://vitepress.yiov.top/zh/permalink/3dc2b3`
