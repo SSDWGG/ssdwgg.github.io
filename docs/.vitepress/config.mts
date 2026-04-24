@@ -110,13 +110,6 @@ const zhSidebar = [
     ],
   },
   {
-    text: '简单算法',
-    collapsed: true,
-    items: [
-      { text: '排序', link: '/frontEnd/algorithm' },
-    ],
-  },
-  {
     text: '电子书籍',
     collapsed: true,
     items: [
@@ -124,19 +117,6 @@ const zhSidebar = [
       { text: '面试宝典', link: '/frontEnd/book/interview' },
       { text: 'css揭秘', link: '/frontEnd/book/css' },
       { text: '代码整洁之道', link: '/frontEnd/book/code' },
-      { text: '算法详解', link: '/frontEnd/book/algorithm' },
-    ],
-  },
-  {
-    text: 'ERP 2026',
-    collapsed: true,
-    items: [
-      { text: '项目配置', link: '/plan/env' },
-      { text: '目标需求', link: '/plan/todo' },
-      { text: '需求评估', link: '/plan/solution' },
-      { text: '需求模块', link: '/plan/solution-part' },
-      { text: 'ERP迭代记录', link: '/plan/iteration' },
-      { text: '人员招聘', link: '/plan/recruitment' },
     ],
   },
   {
@@ -221,17 +201,6 @@ const enSidebar = [
       { text: 'Development Modes', link: '/en/development/type' },
       { text: 'AI-assisted Development', link: '/en/development/ai' },
       { text: 'Git Workflow', link: '/en/development/git' },
-    ],
-  },
-  {
-    text: 'Planning',
-    items: [
-      { text: 'Project Config', link: '/en/plan/env' },
-      { text: 'ERP 2026 Requirements', link: '/en/plan/todo' },
-      { text: 'Requirement Evaluation', link: '/en/plan/solution' },
-      { text: 'Module Breakdown', link: '/en/plan/solution-part' },
-      { text: 'Iteration Log', link: '/en/plan/iteration' },
-      { text: 'Hiring', link: '/en/plan/recruitment' },
     ],
   },
   {

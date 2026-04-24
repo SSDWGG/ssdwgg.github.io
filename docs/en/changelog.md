@@ -19,6 +19,9 @@ next: false
 - Reorganized the documentation into locale-based sections, added the `docs/en` English page set, and updated config plus permalink handling.
 - Improved local assets and fallback behavior for the Christmas role module, including models, textures, audio, and related static resources.
 - Synced bilingual personal pages so locale switching works cleanly.
+- Rewrote the bilingual `development` pages to cover delivery modes, AI collaboration, Git workflow, and Docker-first development guidance.
+- Removed the outdated `algorithm` and `plan` sections, along with their related pages, static assets, and sidebar entries.
+- Expanded the `AI` preface with a clearer mindset recommendation: adopt AI quickly and make it part of both work and daily life.
 :::
 
 ::: timeline 2026-04-23
