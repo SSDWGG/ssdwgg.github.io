@@ -119,6 +119,8 @@ const zhSidebar = [
       { text: 'SaaS', link: '/tech-tools/saas' },
       { text: 'PaaS', link: '/tech-tools/paas' },
       { text: '异步编程', link: '/tech-tools/async-programming' },
+      { text: '前端工程化', link: '/tech-tools/frontend-engineering' },
+      { text: '微前端', link: '/tech-tools/micro-frontend' },
       { text: 'OpenCV', link: '/tech-tools/opencv' },
       { text: 'Three.js', link: '/tech-tools/threejs' },
       { text: 'Vue2', link: '/tech-tools/vue2' },

@@ -18,6 +18,7 @@ next: false
 ::: timeline 2026-04-25
 - Completed the French documentation set with French navigation, sidebar, changelog, and pages for AI, development, technical tools, and supporting sections.
 - Expanded the Chinese `Technical Tools` module with a JavaScript async programming guide covering `Promise`, `async/await`, the event loop, and practical patterns.
+- Expanded the Chinese `Technical Tools` module with micro-frontend and frontend engineering guides covering architecture, configuration examples, and build tools such as `Vite`, `Webpack`, and `Rollup`.
 - Added French locale support for shared theme components, including French site config, search labels, and the French homepage.
 - Improved the root entrance page by replacing the single auto-redirect with a Vue-powered bilingual landing page.
 - Expanded the Chinese `Technical Tools` module with SaaS and PaaS concepts, use cases, and selection guidance.
