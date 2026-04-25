@@ -15,6 +15,10 @@ next: false
 > [!TIP]
 > English version: `/en/changelog`
 
+::: timeline 2026-04-25
+- 新增本地提交前部署脚本，支持先构建 `VitePress` 再通过 SSH/rsync 同步产物到服务器目录。
+:::
+
 ::: timeline 2026-04-24
 - 扩展 `技术工具` 模块，新增 `OpenCV`、`Three.js`、`Vue2`、`Vue3`、`React` 的介绍、使用方式与原理说明。
 - 新增 `技术工具` 一级模块，补充 `Docker`、`Nginx`、`ECS` 的介绍与使用文档。

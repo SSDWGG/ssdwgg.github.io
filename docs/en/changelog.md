@@ -15,6 +15,10 @@ next: false
 > [!TIP]
 > Chinese version: `/zh/changelog`
 
+::: timeline 2026-04-25
+- Added a local pre-commit deployment script that builds `VitePress` and syncs the output to the server through SSH/rsync.
+:::
+
 ::: timeline 2026-04-24
 - Expanded the Chinese `Technical Tools` module with OpenCV, Three.js, Vue2, Vue3, and React guides covering usage and core principles.
 - Added a new Chinese `Technical Tools` top-level module with Docker, Nginx, and ECS introduction and usage guides.
