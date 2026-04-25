@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import { computed } from 'vue'
+import { useSiteLocale } from '../untils/locale'
+
 const { page } = useData()
+const { messages } = useSiteLocale()
 
 const date = computed(
   () => new Date(page.value.lastUpdated!)
@@ -10,7 +13,7 @@ const date = computed(
 
 <template>
   <div class="LastUpdated">
-    <p>更新时间: {{ date.toLocaleString() }}</p>
+    <p>{{ messages.lastUpdated }}: {{ date.toLocaleString(messages.dateLocale) }}</p>
   </div>
 </template>
 

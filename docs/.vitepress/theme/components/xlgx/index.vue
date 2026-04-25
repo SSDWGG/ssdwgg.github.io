@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import Card from './card.vue'
 import { useGame } from './core/useGame'
 import { basicCannon, schoolPride } from './core/utils'
+import { useSiteLocale } from '../../untils/locale'
 
 const containerRef = ref<HTMLElement | undefined>()
 const clickAudioRef = ref<HTMLAudioElement | undefined>()
@@ -13,6 +14,7 @@ const welAudioRef = ref<HTMLAudioElement | undefined>()
 const bgmAudioRef = ref<HTMLAudioElement | undefined>()
 const curLevel = ref(1)
 const showTip = ref(false)
+const { messages } = useSiteLocale()
 const LevelConfig = [
   { cardNum: 4, layerNum: 2, trap: false },
   { cardNum: 9, layerNum: 3, trap: false },
@@ -82,7 +84,7 @@ function handleWin() {
 function handleLose() {
   loseAudioRef.value?.play()
   setTimeout(() => {
-    alert('槽位已满，再接再厉~')
+    alert(messages.value.xlgx.slotFull)
     nodes.value = []
     removeList.value = []
     selectedNodes.value = []
@@ -123,12 +125,12 @@ onMounted(() => {
       </div>
       <transition name="bounce">
         <div v-if="isWin" class="win-message">
-          成功加入kun圈~
+          {{ messages.xlgx.win }}
         </div>
       </transition>
       <transition name="bounce">
         <div v-if="showTip" class="tip-message">
-          第{{ curLevel + 1 }}关
+          {{ messages.xlgx.level }}{{ curLevel + 1 }}{{ messages.xlgx.levelSuffix }}
         </div>
       </transition>
     </div>
@@ -156,10 +158,10 @@ onMounted(() => {
 
     <div class="button-area">
       <button :disabled="removeFlag" class="remove-btn" @click="handleRemove">
-        移出前三个
+        {{ messages.xlgx.removeFirstThree }}
       </button>
       <button :disabled="backFlag" class="back-btn" @click="handleBack">
-        回退
+        {{ messages.xlgx.back }}
       </button>
     </div>
 

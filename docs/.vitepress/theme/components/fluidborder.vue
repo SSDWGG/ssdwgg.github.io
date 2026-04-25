@@ -1,13 +1,19 @@
+<script setup lang="ts">
+import { useSiteLocale } from '../untils/locale'
+
+const { messages } = useSiteLocale()
+</script>
+
 <template>
   <!-- 仅用于演示流体边框，请勿使用本组件 -->
   <div id="fluid-border">
-    <div class="info custom-block"><p class="custom-block-title">INFO</p><p>INFO流体边框</p></div>
-    <div class="tip custom-block"><p class="custom-block-title">TIP</p><p>TIP流体边框</p></div>
-    <div class="warning custom-block"><p class="custom-block-title">WARNING</p><p>WARNING流体边框</p></div>
-    <div class="danger custom-block"><p class="custom-block-title">DANGER</p><p>DANGER流体边框</p></div>
-    <div class="note custom-block github-alert"><p class="custom-block-title">NOTE</p><p>NOTE流体边框</p></div>
-    <div class="important custom-block github-alert"><p class="custom-block-title">IMPORTANT</p><p>IMPORTANT流体边框</p></div>
-    <div class="caution custom-block github-alert"><p class="custom-block-title">CAUTION</p><p>CAUTION流体边框</p></div>
+    <div class="info custom-block"><p class="custom-block-title">INFO</p><p>{{ messages.fluidborderDemo.info }}</p></div>
+    <div class="tip custom-block"><p class="custom-block-title">TIP</p><p>{{ messages.fluidborderDemo.tip }}</p></div>
+    <div class="warning custom-block"><p class="custom-block-title">WARNING</p><p>{{ messages.fluidborderDemo.warning }}</p></div>
+    <div class="danger custom-block"><p class="custom-block-title">DANGER</p><p>{{ messages.fluidborderDemo.danger }}</p></div>
+    <div class="note custom-block github-alert"><p class="custom-block-title">NOTE</p><p>{{ messages.fluidborderDemo.note }}</p></div>
+    <div class="important custom-block github-alert"><p class="custom-block-title">IMPORTANT</p><p>{{ messages.fluidborderDemo.important }}</p></div>
+    <div class="caution custom-block github-alert"><p class="custom-block-title">CAUTION</p><p>{{ messages.fluidborderDemo.caution }}</p></div>
   </div>
 </template>
 

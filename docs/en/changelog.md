@@ -16,6 +16,9 @@ next: false
 > Chinese version: `/zh/changelog`
 
 ::: timeline 2026-04-25
+- Expanded the Chinese `Technical Tools` module with a JavaScript async programming guide covering `Promise`, `async/await`, the event loop, and practical patterns.
+- Added French locale support for shared theme components, including French site config, search labels, and the French homepage.
+- Improved the root entrance page by replacing the single auto-redirect with a Vue-powered bilingual landing page.
 - Expanded the Chinese `Technical Tools` module with SaaS and PaaS concepts, use cases, and selection guidance.
 - Added a local pre-commit deployment script that builds `VitePress` and syncs the output to the server through SSH/rsync.
 :::

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Player from 'xgplayer'
 import 'xgplayer/dist/index.min.css'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useSiteLocale } from '../untils/locale'
 
 interface propsType {
   url: string
@@ -13,11 +14,18 @@ const props = withDefaults(defineProps<propsType>(), {
   poster: '',
 })
 
+const { locale } = useSiteLocale()
+const playerLang = computed(() => {
+  if (locale.value === 'fr')
+    return 'fr'
+  return locale.value === 'en' ? 'en' : 'zh'
+})
+
 onMounted(() => {
   new Player({
     id: 'mse', // 占位id
     volume: 0, // 默认静音
-    lang: 'zh', // 设置中文
+    lang: playerLang.value,
     autoplay: false, // 关闭自动播放
     // autoplayMuted: true,// 是否开启自动静音
     fluid: true, // 流式布局，自动宽高比

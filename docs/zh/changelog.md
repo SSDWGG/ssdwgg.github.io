@@ -16,6 +16,9 @@ next: false
 > English version: `/en/changelog`
 
 ::: timeline 2026-04-25
+- 扩展 `技术工具` 模块，新增 JavaScript 异步编程文档，介绍 `Promise`、`async/await`、事件循环与常见实践。
+- 为主题通用组件补充 `fr` 语言适配，新增法语站点配置、搜索文案和法语首页内容。
+- 完善站点根入口页，移除单一自动跳转，改为可选择中英文入口的 Vue 组件化落地页。
 - 扩展 `技术工具` 模块，新增 `SaaS` 与 `PaaS` 的概念、使用场景和选型建议。
 - 新增本地提交前部署脚本，支持先构建 `VitePress` 再通过 SSH/rsync 同步产物到服务器目录。
 :::

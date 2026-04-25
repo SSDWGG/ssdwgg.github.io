@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import TextType from './TextType.vue'
+import { useSiteLocale } from '../../untils/locale'
 
 
 const emit = defineEmits(['ok'])
-const textList = ['岁聿其莫,时维新春', '龙马精神,万象更新']
+const { messages } = useSiteLocale()
+const textList = computed(() => messages.value.newYearTexts)
 const handleSentenceComplete = (_sentence: string, index: number) => {
-  if (index === textList.length - 1) {
+  if (index === textList.value.length - 1) {
     emit('ok')
   }
 }

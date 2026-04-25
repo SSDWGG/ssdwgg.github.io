@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useSiteLocale } from '../untils/locale'
 
 const iframeRef = ref<HTMLIFrameElement | null>(null)
+const { messages } = useSiteLocale()
 
 // 默认标签列表
-const defaultLabels = ['aaa', 'Merry Christmas']
+const defaultLabels = [...messages.value.christmasTree.labels]
 
 // 需要传递给iframe的标签数据
 const labels = ref<string[]>(defaultLabels)
@@ -18,7 +20,7 @@ const updateLabels = (newLabels: string[]) => {
 }
 
 onMounted(() => {
-  updateLabels(['Happy', 'every', 'day'])
+  updateLabels([...messages.value.christmasTree.labels])
   // 监听来自iframe的消息（如果需要双向通信）
   window.addEventListener('message', (event) => {
     if (event.data.type === 'getLabelsRequest') {
@@ -41,7 +43,7 @@ onMounted(() => {
     <iframe
       ref="iframeRef"
       :src="iframeSrc"
-      title="Christmas Draw"
+      :title="messages.christmasTree.title"
       style="width:100%; height: 100vh;border: none;" 
 
     />

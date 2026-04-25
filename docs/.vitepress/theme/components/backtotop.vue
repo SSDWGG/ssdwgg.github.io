@@ -1,8 +1,10 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, computed } from "vue";
+import { useSiteLocale } from '../untils/locale'
 
 const showBackTop = ref(false); // 初始状态设为false
 const scrollProgress = ref(0);
+const { messages } = useSiteLocale()
 
 // 圆形进度条计算
 const radius = 42;
@@ -67,7 +69,7 @@ onBeforeUnmount(() => {
       </svg>
       <div 
         class="vitepress-backTop-main" 
-        title="返回顶部" 
+        :title="messages.backToTop"
         @click="scrollToTop()"
       >
         <svg class="icon" viewBox="0 0 1024 1024">

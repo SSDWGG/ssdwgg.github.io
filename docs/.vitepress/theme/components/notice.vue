@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useSiteLocale } from '../untils/locale'
 
 const visible = ref(false)
 const showNotice = ref(false)
 const autoHover = ref(false)
+const { messages } = useSiteLocale()
 
 function closetz() {
   showNotice.value = false
@@ -34,21 +36,19 @@ onMounted(() => {
   <Transition name="slide-fade">
     <div v-if="showNotice" class="notice" >
       <h3 class="notice-title">
-        WGGのCRAD
+        {{ messages.noticeCard.title }}
       </h3>
 
       <div class="notice-describe" :class="{ 'auto-hover': autoHover }">
         <!-- 名片分三大块 最外层的一块a、文字一大块b、平面圆柱一块c -->
         <div class="a">
           <div class="b">
-            <a href="#">WGGのCRAD</a>
-            <div class="m-lx-title">WX: Sunshine-RovF</div>
+            <a href="#">{{ messages.noticeCard.title }}</a>
+            <div class="m-lx-title">{{ messages.noticeCard.contact }}</div>
             <span>
-              I'm Ren
-              <br />front-end developer
-              <br />In the days to come
-              <br />Keep going!!
-              <br />
+              <template v-for="line in messages.noticeCard.lines" :key="line">
+                {{ line }}<br />
+              </template>
             </span>
           </div>
           <div class="c">
@@ -67,7 +67,7 @@ onMounted(() => {
 
       <div class="notice-footer">
         <div class="notice-btn" @click="closetz">
-          Got it
+          {{ messages.noticeCard.ok }}
         </div>
       </div>
     </div>

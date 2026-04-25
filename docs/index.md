@@ -1,15 +1,13 @@
 ---
 layout: page
-title: Redirecting
+title: WPD
+titleTemplate: Language Entrance
+description: WGG's personal bilingual docs entrance
+sidebar: false
+outline: false
+editLink: false
+prev: false
+next: false
 ---
 
-<script>
-  if (typeof window !== 'undefined') {
-    window.location.replace('/zh/')
-  }
-</script>
-
-# Redirecting...
-
-- 中文：[`/zh/`](/zh/)
-- English: [`/en/`](/en/)
+<RootLanding />

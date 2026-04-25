@@ -1,15 +1,19 @@
+<script setup lang="ts">
+import { useSiteLocale } from '../untils/locale'
+
+const { messages } = useSiteLocale()
+</script>
+
 <template>
      <!-- 名片分三大块 最外层的一块a、文字一大块b、平面圆柱一块c -->
      <div class="a">
         <div class="b">
-          <a href="#">WGGのCRAD</a>
-          <h2>WX: Sunshine-RovF</h2>
+          <a href="#">{{ messages.noticeCard.title }}</a>
+          <h2>{{ messages.noticeCard.contact }}</h2>
           <span>
-            I'm Ren 
-            <br />front-end developer 
-            <br />In the days to come
-            <br />Keep going!!
-            <br />
+            <template v-for="line in messages.noticeCard.lines" :key="line">
+              {{ line }}<br />
+            </template>
           </span>
         </div>
         <div class="c">

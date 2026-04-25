@@ -40,6 +40,7 @@ import notice from "./components/notice.vue"
 import pageBubble from './components/pbg/pageBubble/index.vue'
 import googleAnalytics from 'vitepress-plugin-google-analytics'
 import WebsiteFrameFallback from './components/WebsiteFrameFallback.vue'
+import RootLanding from './components/RootLanding.vue'
 
 // 彩虹背景动画样式
 let homePageStyle: HTMLStyleElement | undefined
@@ -71,6 +72,7 @@ export default {
     app.component('notice', notice)
     app.component('pageBubble', pageBubble)
     app.component('WebsiteFrameFallback', WebsiteFrameFallback)
+    app.component('RootLanding', RootLanding)
 
 
 
@@ -139,6 +141,11 @@ export default {
 
     // giscus
     const { frontmatter } = useData()
+    const commentLang = route.path.startsWith('/fr/')
+      ? 'fr'
+      : route.path.startsWith('/en/')
+        ? 'en'
+        : 'zh-CN'
 
     // giscus配置
     giscusTalk({
@@ -148,7 +155,7 @@ export default {
       categoryId: 'DIC_kwDOGG2Jj84C4Nf7', // 讨论分类ID
       mapping: 'pathname',
       inputPosition: 'bottom',
-      lang: 'zh-CN',
+      lang: commentLang,
     }, {
       frontmatter,
       route,

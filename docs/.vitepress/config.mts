@@ -118,6 +118,7 @@ const zhSidebar = [
       { text: 'ECS', link: '/tech-tools/ecs' },
       { text: 'SaaS', link: '/tech-tools/saas' },
       { text: 'PaaS', link: '/tech-tools/paas' },
+      { text: '异步编程', link: '/tech-tools/async-programming' },
       { text: 'OpenCV', link: '/tech-tools/opencv' },
       { text: 'Three.js', link: '/tech-tools/threejs' },
       { text: 'Vue2', link: '/tech-tools/vue2' },
@@ -237,6 +238,21 @@ const enSidebar = [
   },
 ]
 
+const frNav = [
+  { text: 'Accueil', link: '/fr/' },
+  { text: '中文站点', link: '/zh/' },
+  { text: 'English Site', link: '/en/' },
+]
+
+const frSidebar = [
+  {
+    text: 'Introduction',
+    items: [
+      { text: 'Accueil', link: '/fr/' },
+    ],
+  },
+]
+
 export default defineConfig({
   lang: 'zh-CN',
   title: 'WPD',
@@ -336,11 +352,43 @@ export default defineConfig({
         },
       },
     },
-    // fr: {
-    //   label: 'French',
-    //   lang: 'fr',
-    //   link: '/fr/',
-    // },
+    fr: {
+      label: 'Français',
+      lang: 'fr-FR',
+      link: '/fr/',
+      title: 'WPD',
+      description: 'Documentation personnelle de WGG',
+      themeConfig: {
+        nav: frNav,
+        sidebar: frSidebar,
+        editLink: {
+          pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path',
+          text: 'Modifier cette page sur GitHub',
+        },
+        lastUpdated: {
+          text: 'Dernière mise à jour',
+          formatOptions: {
+            dateStyle: 'short',
+            timeStyle: 'medium',
+          },
+        },
+        darkModeSwitchLabel: 'Apparence',
+        footer: {
+          message: 'Publié sous licence MIT.',
+          copyright: `Copyright © 2023-${new Date().getFullYear()} <a href="https://github.com/SSDWGG" target="_blank">任羿玮</a>`,
+        },
+        sidebarMenuLabel: 'Menu',
+        returnToTopLabel: 'Retour en haut',
+        outline: {
+          level: [2, 3],
+          label: 'Sur cette page',
+        },
+        docFooter: {
+          prev: 'Page précédente',
+          next: 'Page suivante',
+        },
+      },
+    },
   },
 
   // markdown配置
@@ -380,8 +428,8 @@ export default defineConfig({
         md.render = (...args) => {
           const [content, env] = args
           const currentLang = env?.localeIndex || 'zh'
-          const isHomePage = ['/', '/zh/', '/en/'].includes(env?.path)
-            || ['index.md', 'zh/index.md', 'en/index.md'].includes(env?.relativePath) // 判断是否是首页
+          const isHomePage = ['/', '/zh/', '/en/', '/fr/'].includes(env?.path)
+            || ['index.md', 'zh/index.md', 'en/index.md', 'fr/index.md'].includes(env?.relativePath) // 判断是否是首页
 
           if (isHomePage) {
             return defaultRender.apply(md, args) // 如果是首页，直接渲染内容
@@ -403,6 +451,13 @@ export default defineConfig({
               .replace(/IMPORTANT/g, '중요')
               .replace(/WARNING/g, '경고')
               .replace(/CAUTION/g, '주의')
+          }
+          else if (currentLang === 'fr') {
+            defaultContent = defaultContent.replace(/NOTE/g, 'Remarque')
+              .replace(/TIP/g, 'Conseil')
+              .replace(/IMPORTANT/g, 'Important')
+              .replace(/WARNING/g, 'Avertissement')
+              .replace(/CAUTION/g, 'Attention')
           }
           // 返回渲染的内容
           return defaultContent
@@ -587,6 +642,22 @@ export default defineConfig({
                 footer: {
                   selectText: 'Select',
                   navigateText: 'Navigate'
+                },
+              },
+            },
+          },
+          fr: {
+            translations: {
+              button: {
+                buttonText: 'Rechercher',
+                buttonAriaLabel: 'Rechercher dans la documentation'
+              },
+              modal: {
+                noResultsText: 'Aucun résultat trouvé',
+                resetButtonTitle: 'Effacer la recherche',
+                footer: {
+                  selectText: 'Sélectionner',
+                  navigateText: 'Naviguer'
                 },
               },
             },

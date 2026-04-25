@@ -1,5 +1,10 @@
 <script setup>
 import { inBrowser } from 'vitepress';
+import { computed } from 'vue';
+import { useSiteLocale } from '../untils/locale'
+
+const { messages } = useSiteLocale()
+const clickWords = computed(() => messages.value.clickWords)
 
 if (inBrowser) {
 
@@ -10,8 +15,8 @@ if (inBrowser) {
     return "rgb(" + rs + ',' + gs + ',' + bs + ")";//所有方法的拼接都可以用ES6新特性`其他字符串{$变量名}`替换
   }
 
-  var as = ["富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法制", "爱国", "敬业", "诚信", "友善"]
   document.onclick = function (e) {
+    var as = clickWords.value
     var spans = document.createElement("h6")
     spans.innerHTML = as[Math.floor(Math.random() * as.length)]
     spans.style.position = "absolute"

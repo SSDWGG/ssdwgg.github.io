@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useSiteLocale } from '../untils/locale'
+
+const { messages } = useSiteLocale()
 </script>
 
 <template>
@@ -6,11 +9,11 @@
     <div class="container">
       <section class="grid">
         <span class="text">
-          本站总访问量 <span id="busuanzi_value_site_pv" class="font-bold">--</span> 次
+          {{ messages.busuanzi.sitePv }} <span id="busuanzi_value_site_pv" class="font-bold">--</span> {{ messages.busuanzi.viewUnit }}
         </span>
         <img src="/heart.gif" alt="heart" width="50" height="50" />
         <span class="text">
-          本站访客数 <span id="busuanzi_value_site_uv" class="font-bold">--</span> 人次
+          {{ messages.busuanzi.siteUv }} <span id="busuanzi_value_site_uv" class="font-bold">--</span> {{ messages.busuanzi.visitorUnit }}
         </span>
       </section>
     </div>

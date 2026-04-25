@@ -1,8 +1,15 @@
 
 
+<script setup lang="ts">
+import { useSiteLocale } from '../untils/locale'
+
+const { messages } = useSiteLocale()
+</script>
+
 <template>
   <div class="busuanzi">
-    本站访客数 <span id="busuanzi_value_site_uv" /> 人次 本站总访问量 <span id="busuanzi_value_site_pv" /> 次
+    {{ messages.busuanzi.siteUv }} <span id="busuanzi_value_site_uv" /> {{ messages.busuanzi.visitorUnit }}
+    {{ messages.busuanzi.sitePv }} <span id="busuanzi_value_site_pv" /> {{ messages.busuanzi.viewUnit }}
   </div>
 </template>
 

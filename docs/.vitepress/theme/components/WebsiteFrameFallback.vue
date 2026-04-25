@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useSiteLocale } from '../untils/locale'
+
+const { messages } = useSiteLocale()
 
 const props = withDefaults(defineProps<{
   httpsUrl: string
@@ -79,7 +82,7 @@ onBeforeUnmount(() => {
       class="website-frame-fallback__status"
       :style="{ height }"
     >
-      <p>正在检测 HTTPS 站点可用性...</p>
+      <p>{{ messages.websiteFrameFallback.checking }}</p>
     </div>
 
     <iframe
@@ -95,10 +98,10 @@ onBeforeUnmount(() => {
       class="website-frame-fallback__status"
       :style="{ height }"
     >
-      <p>HTTPS 访问异常，正在降级到 HTTP...</p>
+      <p>{{ messages.websiteFrameFallback.fallback }}</p>
       <div class="website-frame-fallback__actions">
-        <a :href="httpsUrl">重试 HTTPS</a>
-        <a :href="httpUrl">访问 HTTP</a>
+        <a :href="httpsUrl">{{ messages.websiteFrameFallback.retryHttps }}</a>
+        <a :href="httpUrl">{{ messages.websiteFrameFallback.visitHttp }}</a>
       </div>
     </div>
   </div>
