@@ -116,6 +116,8 @@ const zhSidebar = [
       { text: 'Docker', link: '/tech-tools/docker' },
       { text: 'Nginx', link: '/tech-tools/nginx' },
       { text: 'ECS', link: '/tech-tools/ecs' },
+      { text: 'SaaS', link: '/tech-tools/saas' },
+      { text: 'PaaS', link: '/tech-tools/paas' },
       { text: 'OpenCV', link: '/tech-tools/opencv' },
       { text: 'Three.js', link: '/tech-tools/threejs' },
       { text: 'Vue2', link: '/tech-tools/vue2' },

@@ -16,6 +16,7 @@ next: false
 > Chinese version: `/zh/changelog`
 
 ::: timeline 2026-04-25
+- Expanded the Chinese `Technical Tools` module with SaaS and PaaS concepts, use cases, and selection guidance.
 - Added a local pre-commit deployment script that builds `VitePress` and syncs the output to the server through SSH/rsync.
 :::
 
