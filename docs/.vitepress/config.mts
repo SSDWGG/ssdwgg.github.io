@@ -374,7 +374,7 @@ export default defineConfig({
   ],
   // #endregion fav
 
-  base: '/', // 网站部署到github的vitepress这个仓库里
+  base: '/WPD/', // GitHub Pages 项目仓库部署路径
 
   cleanUrls:true, //开启纯净链接无html
 
@@ -382,7 +382,7 @@ export default defineConfig({
   appearance: 'dark',
   // 站点地图
   sitemap: {
-    hostname: 'https://ssdwgg.github.io',
+    hostname: 'https://ssdwgg.github.io/WPD',
   },
 
   // 多语言
@@ -397,7 +397,7 @@ export default defineConfig({
         nav: prefixLocaleItems(zhNav, '/zh'),
         sidebar: prefixLocaleItems(zhSidebar, '/zh'),
         editLink: {
-          pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path',
+          pattern: 'https://github.com/SSDWGG/WPD/blob/main/docs/:path',
           text: '在 GitHub 编辑此页',
         },
         lastUpdated: {
@@ -434,7 +434,7 @@ export default defineConfig({
         nav: enNav,
         sidebar: enSidebar,
         editLink: {
-          pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path',
+          pattern: 'https://github.com/SSDWGG/WPD/blob/main/docs/:path',
           text: 'Edit this page on GitHub',
         },
         lastUpdated: {
@@ -471,7 +471,7 @@ export default defineConfig({
         nav: frNav,
         sidebar: frSidebar,
         editLink: {
-          pattern: 'https://github.com/SSDWGG/ssdwgg.github.io/blob/main/docs/:path',
+          pattern: 'https://github.com/SSDWGG/WPD/blob/main/docs/:path',
           text: 'Modifier cette page sur GitHub',
         },
         lastUpdated: {
@@ -825,7 +825,7 @@ export default defineConfig({
 
     // 社交链接
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/SSDWGG/ssdwgg.github.io' },
+      { icon: 'github', link: 'https://github.com/SSDWGG/WPD' },
       
       {
         icon: {

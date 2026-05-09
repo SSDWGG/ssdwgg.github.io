@@ -15,8 +15,7 @@
 
 ## 在线预览
 
-- 预览地址 1: [http://ssdwgg.site/](http://ssdwgg.site/)
-- 预览地址 2: [https://ssdwgg.github.io/](https://ssdwgg.github.io/)
+- 预览地址: [https://ssdwgg.github.io/WPD/](https://ssdwgg.github.io/WPD/)
 
 ## 这个项目有什么特点
 
@@ -97,7 +96,7 @@ vitepress-WPD
 │  ├─ preface.md                 # 前言/介绍
 │  ├─ update.md                  # 依赖更新说明
 │  └─ ...                        # 其他内容页
-├─ .github/workflows/deploy.yml  # GitHub Pages 部署工作流
+├─ .github/workflows/deploy.yml  # GitHub Pages 部署 (docs/.vitepress/dist)工作流
 ├─ vercel.json                   # Vercel 重写配置
 ├─ package.json
 └─ README.md
