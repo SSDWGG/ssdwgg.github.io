@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
+
 interface Props {
     url: string
     title: string
@@ -12,15 +14,17 @@ const props = withDefaults(defineProps<Props>(), {
     description: '',
     logo: '',
 })
+
+const resolveWithBase = (path: string) => path.startsWith('/') ? withBase(path) : path
 </script>
 
 
 <template>
     <div class="linkcard">
-        <a :href="props.url" target="_blank">
+        <a :href="resolveWithBase(props.url)" target="_blank">
             <p class="description">{{ props.title }}<br><span>{{ props.description }}</span></p>
             <div class="logo">
-                <img alt="logo" width="70px" height="70px" :src="props.logo" />
+                <img alt="logo" width="70px" height="70px" :src="resolveWithBase(props.logo)" />
             </div>
         </a>
     </div>

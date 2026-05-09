@@ -93,7 +93,7 @@ export default {
     if (typeof window !== 'undefined') {
       watch(
         () => router.route.data.relativePath,
-        () => updateHomePageStyle(location.pathname === '/'),
+        () => updateHomePageStyle(router.route.data.relativePath === 'index.md'),
         { immediate: true },
       )
     }

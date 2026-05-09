@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { withBase } from 'vitepress'
 import { localeCards, localeMessages, resolveLocale, type SiteLocale } from '../untils/locale'
 
 const preferredLocale = ref<SiteLocale>('zh')
@@ -30,7 +31,7 @@ onMounted(() => {
           :key="item.id"
           class="locale-card"
           :class="{ preferred: item.id === preferredLocale }"
-          :href="item.href"
+          :href="withBase(item.href)"
         >
           <span class="locale-badge">{{ item.id === preferredLocale ? item.badge : fallbackBadge }}</span>
           <strong>{{ item.title }}</strong>
@@ -45,7 +46,7 @@ onMounted(() => {
         v-for="item in copy.features"
         :key="item.title"
         class="quick-card"
-        :href="item.href"
+        :href="withBase(item.href)"
       >
         <span class="quick-icon">{{ item.icon }}</span>
         <span class="quick-content">

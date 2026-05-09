@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { withBase } from 'vitepress'
 const props = defineProps<Props>()
 const emit = defineEmits(['clickCard'])
 
@@ -15,17 +16,17 @@ const emit = defineEmits(['clickCard'])
 //   return acc
 // }, {} as Record<string, string>)
 const IMG_MAP = {
-  1: "/xlgx/tutukun/1.png",
-  2: "/xlgx/tutukun/2.png",
-  3: "/xlgx/tutukun/3.png",
-  4: "/xlgx/tutukun/4.png",
-  5: "/xlgx/tutukun/5.png",
-  6: "/xlgx/tutukun/6.png",
-  7: "/xlgx/tutukun/7.png",
-  8: "/xlgx/tutukun/8.png",
-  9: "/xlgx/tutukun/9.png",
-  10: "/xlgx/tutukun/10.png",
-  11: "/xlgx/tutukun/11.png"
+  1: withBase('/xlgx/tutukun/1.png'),
+  2: withBase('/xlgx/tutukun/2.png'),
+  3: withBase('/xlgx/tutukun/3.png'),
+  4: withBase('/xlgx/tutukun/4.png'),
+  5: withBase('/xlgx/tutukun/5.png'),
+  6: withBase('/xlgx/tutukun/6.png'),
+  7: withBase('/xlgx/tutukun/7.png'),
+  8: withBase('/xlgx/tutukun/8.png'),
+  9: withBase('/xlgx/tutukun/9.png'),
+  10: withBase('/xlgx/tutukun/10.png'),
+  11: withBase('/xlgx/tutukun/11.png'),
 }
 
 // 卡片节点类型

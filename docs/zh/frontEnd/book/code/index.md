@@ -1,5 +1,9 @@
 ---
 layout: page 
 ---
-<embed src="/book/code.pdf" width="100%" height="800px"></embed>
 
+<script setup>
+import { withBase } from 'vitepress'
+</script>
+
+<embed :src="withBase('/book/code.pdf')" width="100%" height="800px"></embed>
