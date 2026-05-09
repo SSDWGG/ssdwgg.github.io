@@ -19,6 +19,7 @@ next: false
 - Removed SSH remote server deployment scripts and configuration (server decommissioned).
 - Switched GitHub Pages source to GitHub Actions workflow, auto-deploying `docs/.vitepress/dist`.
 - Repository renamed to `WPD`; updated `base` path, `hostname`, and all repo reference URLs.
+- Fixed static asset paths: replaced hardcoded root-relative paths in theme components, CSS, and config with `/WPD/` base-prefixed references.
 :::
 
 ::: timeline 2026-04-25
