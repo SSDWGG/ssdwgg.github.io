@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import { useSiteLocale } from '../untils/locale'
 
 const { messages } = useSiteLocale()
@@ -11,7 +12,7 @@ const { messages } = useSiteLocale()
         <span class="text">
           {{ messages.busuanzi.sitePv }} <span id="busuanzi_value_site_pv" class="font-bold">--</span> {{ messages.busuanzi.viewUnit }}
         </span>
-        <img src="/heart.gif" alt="heart" width="50" height="50" />
+        <img :src="withBase('/heart.gif')" alt="heart" width="50" height="50" />
         <span class="text">
           {{ messages.busuanzi.siteUv }} <span id="busuanzi_value_site_uv" class="font-bold">--</span> {{ messages.busuanzi.visitorUnit }}
         </span>

@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
+
 const listData = [
   '/svga/liliSvga/2022110422344569.svga',
   '/svga/liliSvga/2022110422395120.svga',
@@ -51,6 +53,6 @@ const listData = [
   '/svga/liliSvga/2023021415055742.svga',
   '/svga/liliSvga/2023021415055742.svga',
   '/svga/liliSvga/2024031318511419.svga',
-]
+].map(p => withBase(p))
 
 </script>

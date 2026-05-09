@@ -334,7 +334,7 @@ onMounted(() => {
     width: 120px;
     height: 120px;
     position: absolute;
-    background-image: url('/wechat.png');
+    background-image: url('/WPD/wechat.png');
     background-size: cover;
     margin: 14px;
     margin-top: 30px;

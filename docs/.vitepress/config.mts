@@ -370,7 +370,7 @@ export default defineConfig({
 
   // #region fav
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/WPD/favicon.ico' }],
   ],
   // #endregion fav
 

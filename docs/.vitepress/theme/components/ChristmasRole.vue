@@ -1,6 +1,7 @@
 <!-- eslint-disable ts/ban-ts-comment -->
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import { withBase } from 'vitepress'
 import * as THREE from 'three'
 
 // @ts-ignore
@@ -23,7 +24,7 @@ let particlesGeometry: THREE.BufferGeometry | undefined
 const particleCount = 2000
 let listener: THREE.AudioListener | undefined
 let sound: THREE.PositionalAudio | undefined
-const christmasRoleBase = '/christmasRole'
+const christmasRoleBase = withBase('/christmasRole')
 let removeAudioGestureListeners: (() => void) | undefined
 
 // 创建一个初始化函数

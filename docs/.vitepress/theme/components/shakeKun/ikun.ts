@@ -76,9 +76,9 @@ class IKun {
         this.muted = muted
 
         this.audio = {
-            transient: new Audio(`/kun/j.mp3`),
-            dancing: new Audio(`/kun/jntm.mp3`),
-            crazy: new Audio(`/kun/ngm.mp3`)
+            transient: new Audio(`${import.meta.env.BASE_URL}kun/j.mp3`),
+            dancing: new Audio(`${import.meta.env.BASE_URL}kun/jntm.mp3`),
+            crazy: new Audio(`${import.meta.env.BASE_URL}kun/ngm.mp3`)
         }
         const {height, width} = this
         this.container = container
@@ -87,7 +87,7 @@ class IKun {
         container.style.width = width + 'px'
 
         const image = this.image = new Image(197, 300)
-        image.src = '/kun/kun.png'
+        image.src = `${import.meta.env.BASE_URL}kun/kun.png`
 
         const outline = this.outline = document.createElement('div')
         outline.style.position = 'absolute'

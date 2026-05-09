@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { withBase } from 'vitepress'
 import Card from './card.vue'
 import { useGame } from './core/useGame'
 import { basicCannon, schoolPride } from './core/utils'
@@ -169,39 +170,39 @@ onMounted(() => {
       ref="clickAudioRef"
       style="display: none;"
       controls
-      src="/xlgx/audio/click.mp3"
+      :src="withBase('/xlgx/audio/click.mp3')"
     />
     <audio
       ref="dropAudioRef"
       style="display: none;"
       controls
-      src="/xlgx/audio/drop.mp3"
+      :src="withBase('/xlgx/audio/drop.mp3')"
     />
     <audio
       ref="winAudioRef"
       style="display: none;"
       controls
-      src="/xlgx/audio/win.mp3"
+      :src="withBase('/xlgx/audio/win.mp3')"
     />
     <audio
       ref="loseAudioRef"
       style="display: none;"
       controls
-      src="/xlgx/audio/lose.mp3"
+      :src="withBase('/xlgx/audio/lose.mp3')"
     />
     <audio
       ref="welAudioRef"
       style="display: none;"
       controls
-      src="/xlgx/audio/welcome.mp3"
+      :src="withBase('/xlgx/audio/welcome.mp3')"
     />
     <audio
       ref="bgmAudioRef"
       style="display: none;"
       controls
-      autoplay 
-      loop 
-      src="/xlgx/audio/welcome.mp3"
+      autoplay
+      loop
+      :src="withBase('/xlgx/audio/welcome.mp3')"
     />
   </div>
 </template>
