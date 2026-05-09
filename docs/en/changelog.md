@@ -20,6 +20,7 @@ next: false
 - Switched GitHub Pages source to GitHub Actions workflow, auto-deploying `docs/.vitepress/dist`.
 - Repository renamed to `WPD`; updated `base` path, `hostname`, and all repo reference URLs.
 - Fixed non-root deployment paths: theme components, CSS, social links, and embedded pages now respect the `/WPD/` deployment prefix.
+- Fixed the Christmas tree iframe asset path so `/zh/other/christmas-tree` loads correctly under the `/WPD/` non-root deployment.
 :::
 
 ::: timeline 2026-04-25

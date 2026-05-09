@@ -20,6 +20,7 @@ next: false
 - GitHub Pages 部署源切换为 GitHub Actions 工作流，构建产物 `docs/.vitepress/dist` 自动部署。
 - 仓库重命名为 `WPD`，同步更新 `base` 路径、`hostname` 及所有仓库引用链接。
 - 修复非根路径部署下的跳转与静态资源路径：主题组件、CSS、社交链接和嵌入页统一适配 `/WPD/` 部署前缀。
+- 修复圣诞树页面 iframe 资源路径，确保 `/zh/other/christmas-tree` 在 `/WPD/` 非根路径部署下正常加载。
 :::
 
 ::: timeline 2026-04-25
