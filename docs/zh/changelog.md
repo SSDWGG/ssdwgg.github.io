@@ -15,6 +15,12 @@ next: false
 > [!TIP]
 > English version: `/en/changelog`
 
+::: timeline 2026-05-09
+- 移除 SSH 远程服务器部署配置与脚本，服务器已停用。
+- GitHub Pages 部署源切换为 GitHub Actions 工作流，构建产物 `docs/.vitepress/dist` 自动部署。
+- 仓库重命名为 `WPD`，同步更新 `base` 路径、`hostname` 及所有仓库引用链接。
+:::
+
 ::: timeline 2026-04-25
 - 补齐 `fr` 法语文档体系，新增法语侧边栏、导航入口、更新日志，以及 AI、开发范式、技术工具等页面内容。
 - 扩展 `技术工具` 模块，新增 JavaScript 异步编程文档，介绍 `Promise`、`async/await`、事件循环与常见实践。

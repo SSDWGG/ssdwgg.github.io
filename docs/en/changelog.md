@@ -15,6 +15,12 @@ next: false
 > [!TIP]
 > Chinese version: `/zh/changelog`
 
+::: timeline 2026-05-09
+- Removed SSH remote server deployment scripts and configuration (server decommissioned).
+- Switched GitHub Pages source to GitHub Actions workflow, auto-deploying `docs/.vitepress/dist`.
+- Repository renamed to `WPD`; updated `base` path, `hostname`, and all repo reference URLs.
+:::
+
 ::: timeline 2026-04-25
 - Completed the French documentation set with French navigation, sidebar, changelog, and pages for AI, development, technical tools, and supporting sections.
 - Expanded the Chinese `Technical Tools` module with a JavaScript async programming guide covering `Promise`, `async/await`, the event loop, and practical patterns.
