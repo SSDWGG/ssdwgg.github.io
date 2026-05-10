@@ -15,6 +15,14 @@ next: false
 > [!TIP]
 > Chinese version: `/zh/changelog`
 
+::: timeline 2026-05-10
+- Configured three-way auto-deploy: VPS server + GitHub Pages, triggered on every `main` branch push.
+- VPS deployment to `124.223.119.218`, bound to domains `blog.ssdwgg.site` and `blog.aiwgg.cn` via Nginx.
+- Enabled Let's Encrypt free HTTPS for `blog.ssdwgg.site` with automatic HTTP-to-HTTPS 301 redirect.
+- Refactored GitHub Actions workflow: VPS build uses `VITEPRESS_BASE=/`, GitHub Pages build uses default `/WPD/` path.
+- Updated README with three-endpoint preview URL table.
+:::
+
 ::: timeline 2026-05-09
 - Removed SSH remote server deployment scripts and configuration (server decommissioned).
 - Switched GitHub Pages source to GitHub Actions workflow, auto-deploying `docs/.vitepress/dist`.

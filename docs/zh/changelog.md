@@ -15,6 +15,14 @@ next: false
 > [!TIP]
 > English version: `/en/changelog`
 
+::: timeline 2026-05-10
+- 配置三端自动部署：VPS 服务器 + GitHub Pages，每次推送 `main` 分支自动触发。
+- VPS 部署至 `124.223.119.218`，绑定域名 `blog.ssdwgg.site` 和 `blog.aiwgg.cn`，Nginx 反向代理。
+- `blog.ssdwgg.site` 已启用 Let's Encrypt 免费 HTTPS 证书，HTTP 自动 301 重定向至 HTTPS。
+- GitHub Actions 工作流重构：VPS 构建使用 `VITEPRESS_BASE=/`，GitHub Pages 构建使用默认 `/WPD/` 路径。
+- 更新 README 展示三端预览地址表格。
+:::
+
 ::: timeline 2026-05-09
 - 移除 SSH 远程服务器部署配置与脚本，服务器已停用。
 - GitHub Pages 部署源切换为 GitHub Actions 工作流，构建产物 `docs/.vitepress/dist` 自动部署。
