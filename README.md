@@ -15,7 +15,11 @@
 
 ## 在线预览
 
-- 预览地址: [https://ssdwgg.github.io/WPD/](https://ssdwgg.github.io/WPD/)
+| 端点 | 地址 |
+|------|------|
+| VPS 主域名 (HTTPS) | [https://blog.ssdwgg.site](https://blog.ssdwgg.site) |
+| VPS 别名域名 (HTTPS) | [https://blog.aiwgg.cn](https://blog.aiwgg.cn) |
+| GitHub Pages | [https://ssdwgg.github.io/WPD/](https://ssdwgg.github.io/WPD/)
 
 ## 这个项目有什么特点
 
@@ -179,10 +183,14 @@ vitepress-WPD
 
 ## 部署说明
 
-仓库里已经带了基础部署配置:
+本项目支持三端自动部署，每次推送 `main` 分支后由 GitHub Actions 自动触发：
 
-- `GitHub Pages`: 见 `.github/workflows/deploy.yml`
-- `Vercel`: 见 `vercel.json`
+- **VPS 服务器**: 通过 rsync 部署到 `124.223.119.218`，由 Nginx 提供服务
+  - `VITEPRESS_BASE=/`（根路径部署）
+- **GitHub Pages**: 通过 `peaceiris/actions-gh-pages` 部署到 `gh-pages` 分支
+  - `VITEPRESS_BASE=/WPD/`（子目录部署）
+
+CI/CD 工作流见 `.github/workflows/deploy.yml`。
 
 默认构建产物目录为:
 
